@@ -1,6 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Text } from 'react-native';
 import styled from 'styled-components/native';
 
 function Onboard() {
@@ -8,18 +7,10 @@ function Onboard() {
 
   return (
     <Styled.Container>
-      <Styled.Text>Onboard</Styled.Text>
-      <Styled.Button
-        onPress={() => navigation.navigate('/auth', { screen: '/auth/login' })}
-      >
-        <Text>Get Start</Text>
-      </Styled.Button>
-
-      <Styled.Button
-        onPress={() => navigation.reset({ routes: [{ name: '/' }] })}
-      >
-        <Text>Continue as guest</Text>
-      </Styled.Button>
+      <Styled.LadingImage
+        source={require('../../assets/images/onboarding-ko.jpg')}
+      />
+      <Styled.BottomSheet />
     </Styled.Container>
   );
 }
@@ -29,6 +20,12 @@ const Styled = {
     flex: 1;
     align-items: center;
     justify-content: center;
+  `,
+
+  LadingImage: styled.Image``,
+
+  BottomSheet: styled.View`
+    background-color: #fff;
   `,
 
   Text: styled.Text`
