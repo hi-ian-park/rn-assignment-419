@@ -3,18 +3,31 @@ import React from 'react';
 import { ImageBackground } from 'react-native';
 import styled from 'styled-components/native';
 
+import Button from '../../components/Button';
+import { flexBox } from '../../styles/utils';
+
 function Onboard() {
   const navigation = useNavigation();
 
   return (
     <Styled.Container source={require('../../assets/images/onboarding-ko.jpg')}>
       <Styled.BottomSheet>
-        <Styled.Button isTint>
-          <Styled.Text isTint>Get Started</Styled.Text>
-        </Styled.Button>
-        <Styled.Button>
-          <Styled.Text>Continue as guest</Styled.Text>
-        </Styled.Button>
+        <Button
+          onPress={() => console.log('primary')}
+          size="100%"
+          fontWeight={500}
+          variant="primary"
+        >
+          Get Started
+        </Button>
+        <Button
+          onPress={() => console.log('ghost')}
+          size="100%"
+          fontWeight={400}
+          variant="ghost"
+        >
+          Continue as guest
+        </Button>
       </Styled.BottomSheet>
     </Styled.Container>
   );
@@ -23,30 +36,14 @@ function Onboard() {
 const Styled = {
   Container: styled(ImageBackground)`
     flex: 1;
-    ${({ theme }) => theme.flexBox('row', 'flex-end', 'center')};
+    ${flexBox('row', 'flex-end', 'center')};
   `,
 
   BottomSheet: styled.View`
-    ${({ theme }) => theme.flexBox('column', 'center', 'center')};
+    ${flexBox('column', 'center', 'center')};
     width: 100%;
     padding: 28px 16px;
     background-color: #fff;
-  `,
-
-  Button: styled.TouchableOpacity<{ isTint?: boolean }>`
-    ${({ theme }) => theme.flexBox('row', 'center', 'center')};
-    width: 100%;
-    background-color: ${({ isTint, theme }) =>
-      isTint ? theme.tint : theme.white};
-    padding: 16px;
-    margin-bottom: 10px;
-    border-radius: 15px;
-  `,
-
-  Text: styled.Text<{ isTint?: boolean }>`
-    color: ${({ isTint, theme }) => (isTint ? theme.white : theme.text)};
-    font-size: 16px;
-    font-weight: ${({ isTint }) => (isTint ? 500 : 400)};
   `,
 };
 
