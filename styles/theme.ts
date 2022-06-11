@@ -1,6 +1,7 @@
 export const color = {
   white: '#fff',
-  tint: '#ff3c78',
+  primary: '#ff3c78',
+  ghost: 'transparent',
   text: '#000',
 };
 
