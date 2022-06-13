@@ -1,9 +1,9 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
-import Account from '../screens/Account';
-import Home from '../screens/Home';
-import Search from '../screens/Search';
+import Account from 'screens/Account';
+import Home from 'screens/Home';
+import Search from 'screens/Search';
 
 const Tab = createBottomTabNavigator();
 
@@ -13,7 +13,7 @@ function MainTabs() {
       sceneContainerStyle={{
         backgroundColor: '#eee',
       }}
-      initialRouteName="/"
+      initialRouteName="/home"
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
@@ -21,7 +21,7 @@ function MainTabs() {
         tabBarInactiveTintColor: '#9d9d9d',
       }}
     >
-      <Tab.Screen name="/" component={Home} />
+      <Tab.Screen name="/home" component={Home} />
       <Tab.Screen name="/search" component={Search} />
       <Tab.Screen name="/account" component={Account} />
     </Tab.Navigator>

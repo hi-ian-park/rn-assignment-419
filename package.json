@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
+    "serve": "npx expo start --dev-client",
+    "serve:clear": "npx expo start --dev-client --clear",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",

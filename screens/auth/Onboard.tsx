@@ -3,8 +3,8 @@ import React from 'react';
 import { ImageBackground } from 'react-native';
 import styled from 'styled-components/native';
 
-import Button from '../../components/Button';
-import { flexBox } from '../../styles/utils';
+import Button from 'components/Button';
+import { flexBox } from 'styles/utils';
 
 function Onboard() {
   const navigation = useNavigation();
