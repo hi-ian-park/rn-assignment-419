@@ -8,6 +8,7 @@ import { flexBox } from '../../styles/utils';
 
 function Onboard() {
   const navigation = useNavigation();
+  const onGoToHome = () => navigation.reset({ routes: [{ name: '/' }] });
 
   return (
     <Styled.Container source={require('../../assets/images/onboarding-ko.jpg')}>
@@ -21,7 +22,7 @@ function Onboard() {
           Get Started
         </Button>
         <Button
-          onPress={() => console.log('ghost')}
+          onPress={onGoToHome}
           size="100%"
           fontWeight={400}
           variant="ghost"
@@ -36,7 +37,7 @@ function Onboard() {
 const Styled = {
   Container: styled(ImageBackground)`
     flex: 1;
-    ${flexBox('row', 'flex-end', 'center')};
+    ${flexBox('row', 'end', 'center')};
   `,
 
   BottomSheet: styled.View`
