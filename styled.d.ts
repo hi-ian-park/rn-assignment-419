@@ -3,9 +3,17 @@ import 'styled-components';
 // and extend them!
 declare module 'styled-components' {
   export interface DefaultTheme {
-    white: string;
-    primary: string;
-    ghost: string;
-    text: string;
+    colors: {
+      white: string;
+      overlayBackground: string;
+      primary: string;
+      ghost: string;
+      text: string;
+    };
+
+    levels: {
+      overlay: number;
+      bottomSheetModal: number;
+    };
   }
 }

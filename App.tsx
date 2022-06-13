@@ -16,7 +16,7 @@ import { StatusBar } from 'expo-status-bar';
 import { ThemeProvider } from 'styled-components';
 
 import Root from './navigation/Root';
-import { color, mixins } from './styles/theme';
+import { theme } from './styles/theme';
 
 export default function App() {
   const [isNotoSansFontsLoaded] = useNotoSansKrFonts({
@@ -37,7 +37,7 @@ export default function App() {
   if (isResourceLoaded) return <AppLoading />;
 
   return (
-    <ThemeProvider theme={{ ...color, ...mixins }}>
+    <ThemeProvider theme={theme}>
       <NavigationContainer>
         <StatusBar />
         <Root />

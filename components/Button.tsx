@@ -56,7 +56,7 @@ const Styled = {
   Button: styled.TouchableOpacity<StyledButtonProps>`
     ${flexBox()};
     width: ${({ size }) => size};
-    background-color: ${({ theme, variant }) => theme[variant]};
+    background-color: ${({ theme, variant }) => theme.colors[variant]};
     padding: 16px;
     margin-bottom: 10px;
     border-radius: 15px;
@@ -64,7 +64,7 @@ const Styled = {
 
   Text: styled.Text<StyledButtonProps>`
     color: ${({ theme, variant }) =>
-      variant === 'primary' ? theme.white : theme.text};
+      variant === 'primary' ? theme.colors.white : theme.colors.text};
     font-size: 16px;
     font-weight: ${({ fontWeight }) => fontWeight || 400};
   `,
