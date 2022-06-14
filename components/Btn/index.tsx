@@ -1,14 +1,15 @@
 import { ReactChildren } from 'react';
 import styled from 'styled-components/native';
 
-import { flexBox } from '../styles/utils';
+import { flexBox } from '../../styles/utils';
 
 type ButtonVariant = 'primary' | 'secondary' | 'outlined' | 'ghost';
 type ButtonSize = '100%';
 type ButtonFontWeight = 300 | 400 | 500 | 600 | 700 | 900;
 
-type ButtonProps = {
-  variant: ButtonVariant;
+export type ButtonProps = {
+  variant?: ButtonVariant;
+  backgroundColor?: string;
   size: '100%';
   children?: ReactChildren | string;
   fontWeight?: ButtonFontWeight;
@@ -20,12 +21,21 @@ type ButtonProps = {
 // 어느정도 추상화를 해야 할까??
 
 function Button(props: ButtonProps) {
-  const { variant, children, size, fontWeight, onPress, ...others } = props;
+  const {
+    variant,
+    children,
+    size,
+    fontWeight,
+    onPress,
+    backgroundColor,
+    ...others
+  } = props;
 
   if (typeof children === 'string')
     return (
       <Styled.Button
         variant={variant}
+        backgroundColor={backgroundColor}
         size={size}
         onPress={onPress}
         {...others}
@@ -48,6 +58,7 @@ export default Button;
 // Styled
 type StyledButtonProps = {
   variant: ButtonVariant;
+  backgroundColor?: string;
   size?: ButtonSize;
   fontWeight?: ButtonFontWeight;
 };
@@ -56,7 +67,10 @@ const Styled = {
   Button: styled.TouchableOpacity<StyledButtonProps>`
     ${flexBox()};
     width: ${({ size }) => size};
-    background-color: ${({ theme, variant }) => theme.colors[variant]};
+    background-color: ${({ theme, variant, backgroundColor }) =>
+      variant ? theme.colors[variant] : backgroundColor};
+    border: ${({ variant }) =>
+      variant === 'outlined' ? '1px solid #ECECEC' : 'none'};
     padding: 16px;
     margin-bottom: 10px;
     border-radius: 15px;
