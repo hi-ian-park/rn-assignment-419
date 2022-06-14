@@ -1,11 +1,12 @@
-import React, { useCallback, useRef } from 'react';
-import { Animated, Dimensions } from 'react-native';
+import React from 'react';
+import { Dimensions, Modal } from 'react-native';
 import styled from 'styled-components/native';
 
 import { flexBox } from 'styles/utils';
 
 type BottomSheetProps = {
   visible: boolean;
+  onToggleModal: () => void;
   children: React.ReactNode;
   onCloseModal: () => void;
 };
@@ -13,34 +14,31 @@ type BottomSheetProps = {
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 const BottomSheet = (props: BottomSheetProps) => {
-  const { children, visible, onCloseModal } = props;
+  const { children, visible, onCloseModal, onToggleModal } = props;
 
   return (
-    <>
-      <Styled.Container visible={visible}>{children}</Styled.Container>
-      <Styled.Overlay
-        visible={visible}
-        activeOpacity={0.5}
-        onPressOut={onCloseModal}
-      />
-    </>
+    <Modal
+      animationType="slide"
+      transparent
+      hardwareAccelerated
+      visible={visible}
+    >
+      <Styled.Container>{children}</Styled.Container>
+      <Styled.Overlay activeOpacity={0.5} onPressOut={onCloseModal} />
+    </Modal>
   );
 };
 
 export default BottomSheet;
 
-type StyledBottomSheetProps = {
-  visible: boolean;
-};
-
 const BOTTOM_SHEET_HEIGHT = SCREEN_HEIGHT / 2.75;
 
 const Styled = {
-  Container: styled(Animated.View)<StyledBottomSheetProps>`
+  Container: styled.View`
     ${flexBox('column', 'center', 'center')};
     position: absolute;
-    bottom: ${({ visible }) => (visible ? 0 : -BOTTOM_SHEET_HEIGHT)};
     width: 100%;
+    bottom: 0;
     height: ${BOTTOM_SHEET_HEIGHT};
     padding: 28px 16px;
     background-color: #fff;
@@ -48,8 +46,7 @@ const Styled = {
     z-index: ${({ theme }) => theme.levels.bottomSheetModal};
   `,
 
-  Overlay: styled.TouchableOpacity<StyledBottomSheetProps>`
-    display: ${({ visible }) => (visible ? 'flex' : 'none')};
+  Overlay: styled.TouchableOpacity`
     position: absolute;
     top: 0;
     left: 0;
