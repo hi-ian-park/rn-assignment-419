@@ -9,34 +9,46 @@ import SocialLoginButton from 'components/Btn/SocialLoginButton';
 import { flexBox } from 'styles/utils';
 
 function Onboard() {
-  const [isModalOn, setIsModalOn] = useState(false);
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const navigation = useNavigation();
-  const onGoToHome = () => navigation.reset({ routes: [{ name: '/' }] });
-  const onToggleModal = () => setIsModalOn(!isModalOn);
-  const onOpenModal = () => setIsModalOn(true);
-  const onCloseModal = () => setIsModalOn(false);
+
+  // Event Handler
+  const handlePressStartBtn = useCallback(() => {
+    setIsBottomSheetOpen(true);
+  }, []);
+  // TODO: onCloseBottomSheet vs handleCloseBottomSheet ??
+  const onCloseBottomSheet = useCallback(() => {
+    setIsBottomSheetOpen(false);
+  }, []);
+  const handlePressContinueAsGuestBtn = useCallback(() => {
+    navigation.reset({ routes: [{ name: '/' }] });
+  }, []);
+  const handlePressContinueWithEmailBtn = useCallback(() => {
+    onCloseBottomSheet();
+    navigation.navigate('/auth', { screen: '/auth/signup' });
+  }, []);
 
   return (
     <Styled.Container source={require('../../assets/images/onboarding-ko.jpg')}>
       <Styled.BottomSheet>
-        <Btn onPress={onOpenModal} size="100%" variant="primary">
+        <Btn onPress={handlePressStartBtn} size="100%" variant="primary">
           Get Started
         </Btn>
-        <Btn onPress={onGoToHome} size="100%" variant="ghost">
+        <Btn
+          onPress={handlePressContinueAsGuestBtn}
+          size="100%"
+          variant="ghost"
+        >
           Continue as guest
         </Btn>
       </Styled.BottomSheet>
-      <BottomSheet
-        onToggleModal={onToggleModal}
-        visible={isModalOn}
-        onCloseModal={onCloseModal}
-      >
+      <BottomSheet visible={isBottomSheetOpen} onClose={onCloseBottomSheet}>
         <SocialLoginButton
           iconName="apple"
           variant="primary"
           backgroundColor="#0F0F0F"
           iconColor="#fff"
-          onPress={() => setIsModalOn(false)}
+          onPress={onCloseBottomSheet}
           size="100%"
         >
           Continue with Apple
@@ -46,7 +58,7 @@ function Onboard() {
           backgroundColor="transparent"
           iconColor="#333"
           variant="outlined"
-          onPress={() => setIsModalOn(false)}
+          onPress={onCloseBottomSheet}
           size="100%"
         >
           Continue with Google
@@ -56,12 +68,16 @@ function Onboard() {
           variant="primary"
           backgroundColor="#007DFF"
           iconColor="#fff"
-          onPress={() => setIsModalOn(false)}
+          onPress={onCloseBottomSheet}
           size="100%"
         >
           Continue with Facebook
         </SocialLoginButton>
-        <Btn onPress={onGoToHome} size="100%" variant="ghost">
+        <Btn
+          onPress={handlePressContinueWithEmailBtn}
+          size="100%"
+          variant="ghost"
+        >
           Continue with Email
         </Btn>
       </BottomSheet>

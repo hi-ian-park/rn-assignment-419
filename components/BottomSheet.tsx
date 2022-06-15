@@ -6,15 +6,14 @@ import { flexBox } from 'styles/utils';
 
 type BottomSheetProps = {
   visible: boolean;
-  onToggleModal: () => void;
   children: React.ReactNode;
-  onCloseModal: () => void;
+  onClose: () => void;
 };
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 const BottomSheet = (props: BottomSheetProps) => {
-  const { children, visible, onCloseModal, onToggleModal } = props;
+  const { children, visible, onClose } = props;
 
   return (
     <Modal
@@ -24,7 +23,7 @@ const BottomSheet = (props: BottomSheetProps) => {
       visible={visible}
     >
       <Styled.Container>{children}</Styled.Container>
-      <Styled.Overlay activeOpacity={0.5} onPressOut={onCloseModal} />
+      <Styled.Overlay activeOpacity={0.5} onPressOut={onClose} />
     </Modal>
   );
 };

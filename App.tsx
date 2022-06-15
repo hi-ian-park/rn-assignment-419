@@ -24,13 +24,11 @@ export default function App() {
     NotoSansKR_500Medium,
     NotoSansKR_400Regular,
   });
-  console.log('isNotoSansFontsLoaded: ', isNotoSansFontsLoaded);
   const [isPoppinsFontsLoaded] = usePoppinsFonts({
     Poppins_400Regular,
     Poppins_500Medium,
     Poppins_600SemiBold,
   });
-  console.log('isPoppinsFontsLoaded: ', isPoppinsFontsLoaded);
 
   const isResourceLoaded = !(isNotoSansFontsLoaded && isPoppinsFontsLoaded);
 
