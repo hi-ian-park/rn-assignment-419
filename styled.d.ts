@@ -7,8 +7,10 @@ declare module 'styled-components' {
       white: string;
       overlayBackground: string;
       primary: string;
+      border: string;
       ghost: string;
       text: string;
+      placeholder: string;
     };
 
     levels: {

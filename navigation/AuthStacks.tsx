@@ -1,11 +1,11 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-import Login from '../screens/auth/Login';
-import Onboard from '../screens/auth/Onboard';
-import SignUp from '../screens/auth/SignUp';
+import LogInSignUp from 'screens/auth/LogInSignUp';
+import Onboard from 'screens/auth/Onboard';
 
 const NativeStack = createNativeStackNavigator();
+
 // TODO: 여기부터 작업 시작
 function AuthStacks() {
   return (
@@ -16,8 +16,7 @@ function AuthStacks() {
       }}
     >
       <NativeStack.Screen name="/auth/onboard" component={Onboard} />
-      <NativeStack.Screen name="/auth/login" component={Login} />
-      <NativeStack.Screen name="/auth/signup" component={SignUp} />
+      <NativeStack.Screen name="/auth/login-signup" component={LogInSignUp} />
     </NativeStack.Navigator>
   );
 }

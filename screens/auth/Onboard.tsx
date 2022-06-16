@@ -25,7 +25,7 @@ function Onboard() {
   }, []);
   const handlePressContinueWithEmailBtn = useCallback(() => {
     onCloseBottomSheet();
-    navigation.navigate('/auth', { screen: '/auth/signup' });
+    navigation.navigate('/auth', { screen: '/auth/login-signup' });
   }, []);
 
   return (
