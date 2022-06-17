@@ -1,6 +1,6 @@
 import { DefaultTheme } from 'styled-components';
 
-export const colors = {
+const colors = {
   white: '#fff',
   overlayBackground: '#111',
   primary: '#ff3c78',
@@ -10,12 +10,39 @@ export const colors = {
   placeholder: '#7b7b7b',
 };
 
-export const levels = {
+const fontFamilies = {
+  bold: 'Poppins_600SemiBold',
+  semiBold: 'Poppins_500Medium',
+  regular: 'Poppins_400Regular',
+};
+
+const fontSizes = {
+  xxs: '12px',
+  xs: '13px',
+  sm: '14px',
+  base: '16px',
+  md: '18px',
+  lg: '24px',
+};
+
+const lineHeights = {
+  xxs: '16px',
+  xs: '20px',
+  sm: '24px',
+  base: '24px',
+  md: '28px',
+  lg: '34px',
+};
+
+const levels = {
   overlay: 100,
   bottomSheetModal: 200,
 };
 
 export const theme: DefaultTheme = {
   colors,
+  fontFamilies,
+  fontSizes,
+  lineHeights,
   levels,
 };
