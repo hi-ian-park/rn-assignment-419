@@ -13,10 +13,18 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'expo-status-bar';
+import { connectToDevTools } from 'react-devtools-core';
 import { ThemeProvider } from 'styled-components';
 
 import Root from './navigation/Root';
 import { theme } from './styles/theme';
+
+if (__DEV__) {
+  connectToDevTools({
+    host: 'localhost',
+    port: 8097,
+  });
+}
 
 export default function App() {
   const [isNotoSansFontsLoaded] = useNotoSansKrFonts({
