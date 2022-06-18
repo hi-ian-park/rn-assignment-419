@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { TextInputProps } from 'react-native';
 import styled from 'styled-components/native';
 
@@ -12,6 +12,7 @@ type InputBaseProps = TextInputProps & {
 const InputBase = (props: InputBaseProps) => {
   const [isFocus, setIsFocus] = useState(false);
   return (
+    // FIXME: type 에러 고치기
     <Styled.Input
       {...props}
       isFocus={isFocus}

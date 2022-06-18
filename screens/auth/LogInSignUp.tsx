@@ -1,6 +1,6 @@
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import { useRef } from 'react';
 import { SafeAreaView, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 
@@ -11,11 +11,25 @@ import { flexBox } from 'styles/utils';
 
 function SignUp() {
   const navigation = useNavigation();
-  const handleGoBackBtn = () => {
-    navigation.goBack();
-  };
+  const handleGoBackBtn = () => navigation.goBack();
+  const emailInputRef = useRef('');
+  const onChangeText = (text: string) => (emailInputRef.current = text);
   const handlePressNextBtn = () => {
-    console.log('NEXT 버튼이욤');
+    console.log('next button!');
+    fetch('https://auth-dev.sodacrew.com/auth/check-registration', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+      body: JSON.stringify({
+        email: emailInputRef.current,
+      }),
+    })
+      .then((res) => {
+        console.log(res.status);
+        return res.json();
+      })
+      .then(console.log);
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -31,8 +45,9 @@ function SignUp() {
 
         <Styled.InputWrapper>
           <InputBase
+            onChangeText={onChangeText}
             keyboardType="email-address"
-            placeholder="hihi"
+            placeholder="Enter email address"
             placeholderTextColor="#7b7b7b"
           />
         </Styled.InputWrapper>
