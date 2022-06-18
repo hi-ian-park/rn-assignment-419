@@ -1,4 +1,5 @@
 import React from 'react';
+import { TextStyle } from 'react-native';
 import { TypographyScale } from 'styled-components';
 import styled from 'styled-components/native';
 
@@ -7,15 +8,21 @@ import { textStyle } from 'styles/utils';
 type TextFontWeightType = 'regular' | 'semiBold' | 'bold';
 
 type TextProps = StyledTextProps & {
-  // TODO: any type 고치기
   children: any;
+  style: TextStyle;
 };
 
 const Text = (props: TextProps) => {
-  const { children, size, color, fontWeight } = props;
+  const { children, size, color, fontWeight, style } = props;
 
+  // TODO: 이거먼저 밑줄, 취소선 style을 기본컴포넌트에서 만드는 방법 찾기
   return (
-    <Styled.Text size={size} color={color} fontWeight={fontWeight}>
+    <Styled.Text
+      size={size}
+      color={color}
+      fontWeight={fontWeight}
+      style={style}
+    >
       {children}
     </Styled.Text>
   );

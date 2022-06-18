@@ -54,8 +54,8 @@ const SignUp = (props: SignUpProps) => {
               </Text>
             </Styled.TextWrapper>
             <TouchableOpacity onPress={handleShowPassword}>
-              <Text size="sm" border>
-                Show password
+              <Text size="sm" style={{ textDecorationLine: 'underline' }}>
+                {hidePassword ? 'Show password' : 'Hide password'}
               </Text>
             </TouchableOpacity>
           </Styled.HelpText>
