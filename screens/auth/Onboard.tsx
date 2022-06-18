@@ -31,19 +31,26 @@ function Onboard() {
   return (
     <Styled.Container source={require('../../assets/images/onboarding-ko.jpg')}>
       <Styled.BottomSheet>
-        <Btn onPress={handlePressStartBtn} size="100%" variant="primary">
+        <Btn
+          style={{ marginBottom: 10 }}
+          onPress={handlePressStartBtn}
+          size="100%"
+          variant="primary"
+        >
           Get Started
         </Btn>
         <Btn
           onPress={handlePressContinueAsGuestBtn}
           size="100%"
           variant="ghost"
+          fontSize="sm"
         >
           Continue as guest
         </Btn>
       </Styled.BottomSheet>
       <BottomSheet visible={isBottomSheetOpen} onClose={onCloseBottomSheet}>
-        <SocialLoginButton
+        <Styled.SocialLoginButton
+          style={{ marginBottom: 10 }}
           iconName="apple"
           variant="primary"
           backgroundColor="#0F0F0F"
@@ -52,8 +59,9 @@ function Onboard() {
           size="100%"
         >
           Continue with Apple
-        </SocialLoginButton>
-        <SocialLoginButton
+        </Styled.SocialLoginButton>
+        <Styled.SocialLoginButton
+          style={{ marginBottom: 10 }}
           iconName="google"
           backgroundColor="transparent"
           iconColor="#333"
@@ -62,8 +70,9 @@ function Onboard() {
           size="100%"
         >
           Continue with Google
-        </SocialLoginButton>
-        <SocialLoginButton
+        </Styled.SocialLoginButton>
+        <Styled.SocialLoginButton
+          style={{ marginBottom: 10 }}
           iconName="facebook"
           variant="primary"
           backgroundColor="#007DFF"
@@ -72,11 +81,12 @@ function Onboard() {
           size="100%"
         >
           Continue with Facebook
-        </SocialLoginButton>
+        </Styled.SocialLoginButton>
         <Btn
           onPress={handlePressContinueWithEmailBtn}
           size="100%"
           variant="ghost"
+          fontSize="sm"
         >
           Continue with Email
         </Btn>
@@ -97,6 +107,8 @@ const Styled = {
     padding: 28px 16px;
     background-color: #fff;
   `,
+
+  SocialLoginButton: styled(SocialLoginButton)``,
 
   Overlay: styled.View`
     position: fixed;

@@ -7,7 +7,8 @@ import { textStyle } from 'styles/utils';
 type TextFontWeightType = 'regular' | 'semiBold' | 'bold';
 
 type TextProps = StyledTextProps & {
-  children: React.ReactChildren | string;
+  // TODO: any type 고치기
+  children: any;
 };
 
 const Text = (props: TextProps) => {

@@ -1,7 +1,9 @@
+import { StyleProp, ViewStyle } from 'react-native';
 import { TypographyScale } from 'styled-components';
 import styled from 'styled-components/native';
 
 import Text from 'components/Text';
+import { theme } from 'styles/theme';
 
 import { flexBox } from '../../styles/utils';
 
@@ -9,6 +11,7 @@ type ButtonVariant = 'primary' | 'secondary' | 'outlined' | 'ghost';
 type ButtonSize = '100%';
 
 export type ButtonProps = {
+  style?: StyleProp<ViewStyle>;
   variant?: ButtonVariant;
   backgroundColor?: string;
   size: '100%';
@@ -19,6 +22,7 @@ export type ButtonProps = {
 
 function Button(props: ButtonProps) {
   const {
+    style,
     variant,
     children,
     size,
@@ -29,11 +33,20 @@ function Button(props: ButtonProps) {
   } = props;
 
   return (
-    <Styled.Button variant={variant} size={size} onPress={onPress} {...others}>
+    <Styled.Button
+      style={style}
+      variant={variant}
+      size={size}
+      onPress={onPress}
+      {...others}
+    >
       {typeof children === 'string' ? (
-        <Styled.Text variant={variant} size={fontSize}>
+        <Text
+          size={fontSize}
+          color={variant === 'primary' ? theme.colors.white : theme.colors.text}
+        >
           {children}
-        </Styled.Text>
+        </Text>
       ) : (
         children
       )}
@@ -50,10 +63,6 @@ type StyledButtonProps = {
   size?: ButtonSize;
 };
 
-type StyledTextProps = {
-  variant: ButtonVariant;
-};
-
 const Styled = {
   Button: styled.TouchableOpacity<StyledButtonProps>`
     ${flexBox()};
@@ -64,11 +73,5 @@ const Styled = {
       variant === 'outlined' ? '1px solid #ECECEC' : 'none'};
     padding: 16px;
     border-radius: 15px;
-  `,
-
-  Text: styled(Text)<StyledTextProps>`
-    color: ${({ theme, variant }) => {
-      return variant === 'primary' ? theme.colors.white : theme.colors.text;
-    }};
   `,
 };
