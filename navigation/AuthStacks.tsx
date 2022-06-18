@@ -6,7 +6,6 @@ import Onboard from 'screens/auth/Onboard';
 
 const NativeStack = createNativeStackNavigator();
 
-// TODO: 여기부터 작업 시작
 function AuthStacks() {
   return (
     <NativeStack.Navigator

@@ -5,13 +5,17 @@ import { SafeAreaView, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 
 import Btn from 'components/Btn';
+import InputBase from 'components/Input';
+import Text from 'components/Text';
 import { flexBox } from 'styles/utils';
 
 function SignUp() {
-  const [isFocus, setIsFocus] = useState(false);
   const navigation = useNavigation();
   const handleGoBackBtn = () => {
     navigation.goBack();
+  };
+  const handlePressNextBtn = () => {
+    console.log('NEXT 버튼이욤');
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -21,19 +25,19 @@ function SignUp() {
             <FontAwesome5 name="chevron-left" size={24} color="black" />
           </TouchableOpacity>
         </Styled.Header>
-        <Styled.H1>Log in or Sign up{'\n'}with email</Styled.H1>
+        <Text fontWeight="bold" size="lg">
+          Log in or Sign up{'\n'}with email
+        </Text>
 
         <Styled.InputWrapper>
-          <Styled.Input
-            placeholder="Enter email address"
+          <InputBase
+            keyboardType="email-address"
+            placeholder="hihi"
             placeholderTextColor="#7b7b7b"
-            onFocus={() => setIsFocus(true)}
-            onBlur={() => setIsFocus(false)}
-            isFocus={isFocus}
           />
         </Styled.InputWrapper>
-        <Btn size="100%" variant="primary">
-          Next
+        <Btn onPress={handlePressNextBtn} size="100%" variant="primary">
+          <Text color="#fff">Next</Text>
         </Btn>
       </Styled.Container>
     </SafeAreaView>
@@ -52,9 +56,7 @@ const Styled = {
     margin-bottom: 32px;
   `,
 
-  H1: styled.Text`
-    font-size: 24px;
-    font-weight: 500;
+  H1: styled(Text)`
     margin-bottom: 24px;
   `,
 
@@ -64,20 +66,11 @@ const Styled = {
     margin-bottom: 4px;
   `,
 
+  // 디자인 상에서는 with Label Text Fields 이지만, 실제로 Label이 없기 때문에 margin으로 스타일링
   InputWrapper: styled.View`
     padding: 0 8px;
-  `,
-
-  Input: styled.TextInput`
-    align-items: center;
-    justify-content: center;
-    padding: 30px 8px 13px 8px;
+    margin-top: 30px;
     margin-bottom: 60px;
-    font-size: 15px;
-    line-height: 23;
-    border-bottom-color: ${({ isFocus, theme }) =>
-      isFocus ? theme.colors.text : theme.colors.border};
-    border-bottom-width: 1px;
   `,
 };
 
