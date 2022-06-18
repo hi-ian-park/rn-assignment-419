@@ -9,7 +9,7 @@ type TextFontWeightType = 'regular' | 'semiBold' | 'bold';
 
 type TextProps = StyledTextProps & {
   children: any;
-  style: TextStyle;
+  style?: TextStyle;
 };
 
 const Text = (props: TextProps) => {

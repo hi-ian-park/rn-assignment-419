@@ -1,7 +1,7 @@
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useRef } from 'react';
-import { SafeAreaView, TouchableOpacity } from 'react-native';
+import { Alert, SafeAreaView, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 
 import NavigationBar from 'components/Bars/NavigationBar';
@@ -14,24 +14,26 @@ function LogInSignUp() {
   const navigation = useNavigation();
   const emailInputRef = useRef('');
   const onChangeText = (text: string) => (emailInputRef.current = text);
-  const handlePressNextBtn = () => {
+  const handlePressNextBtn = async () => {
     console.log('next button!');
-    fetch('https://auth-dev.sodacrew.com/auth/check-registration', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8',
-      },
-      body: JSON.stringify({
-        email: emailInputRef.current,
-      }),
-    })
-      .then((res) => {
-        console.log(res.status);
-        return res.json();
-      })
-      .then(console.log);
+    const response = await fetch(
+      'https://auth-dev.sodacrew.com/auth/check-registration',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+        },
+        body: JSON.stringify({
+          email: emailInputRef.current,
+        }),
+      }
+    ).catch((err) => Alert.alert(err));
+    console.log(response.status);
+    const data = await response.json();
 
-    navigation.navigate('/auth/signup');
+    console.log(data);
+    if (data.registered) navigation.navigate('/auth/login');
+    else navigation.navigate('/auth/signup');
   };
 
   return (
