@@ -6,7 +6,7 @@ const colors = {
   primary: '#ff3c78',
   ghost: 'transparent',
   border: '#bfbfbf',
-  text: '#000',
+  text: '#0f0f0f',
   placeholder: '#7b7b7b',
 };
 
@@ -22,7 +22,8 @@ const fontSizes = {
   sm: '14px',
   base: '16px',
   md: '18px',
-  lg: '24px',
+  lg: '20px',
+  xl: '24px',
 };
 
 const lineHeights = {
@@ -31,7 +32,8 @@ const lineHeights = {
   sm: '24px',
   base: '24px',
   md: '28px',
-  lg: '34px',
+  lg: '30px',
+  xl: '34px',
 };
 
 const levels = {

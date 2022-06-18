@@ -2,7 +2,14 @@
 import 'styled-components';
 // and extend them!
 declare module 'styled-components' {
-  export type TypographyScale = 'xxs' | 'xs' | 'sm' | 'base' | 'md' | 'lg';
+  export type TypographyScale =
+    | 'xxs'
+    | 'xs'
+    | 'sm'
+    | 'base'
+    | 'md'
+    | 'lg'
+    | 'xl';
   export interface DefaultTheme {
     colors: {
       white: string;
@@ -27,6 +34,7 @@ declare module 'styled-components' {
       base: string;
       md: string;
       lg: string;
+      xl: string;
     };
 
     lineHeights: {
@@ -36,6 +44,7 @@ declare module 'styled-components' {
       base: string;
       md: string;
       lg: string;
+      xl: string;
     };
 
     levels: {
