@@ -11,6 +11,7 @@ type InputBaseProps = TextInputProps & {
 
 const InputBase = (props: InputBaseProps) => {
   const [isFocus, setIsFocus] = useState(false);
+
   return (
     // FIXME: type 에러 고치기
     <Styled.Input

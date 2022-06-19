@@ -8,20 +8,32 @@ import InputBase from 'components/Input';
 import Text from 'components/Text';
 import { theme } from 'styles/theme';
 
-function Login() {
+import PasswordInput from '../../components/Input/Password';
+
+function Login({ route }) {
+  // TODO: navigate route로 email 보내줘야함~!
+  const [password, setPassword] = useState('');
   const [hidePassword, setHidePassword] = useState(true);
-  const handleShowPassword = () => setHidePassword(!hidePassword);
+  const onChangeText = (text) => setPassword(text);
+  console.log(route);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Styled.Container>
         <NavigationBar />
         <Text size="lg" fontWeight="bold">
-          Hi, $NAME
+          Hi, {route.params.name}
         </Text>
         <Text size="xl" fontWeight="bold">
           Enter your password
         </Text>
-        <Styled.InputWrapper>
+        <PasswordInput
+          value={password}
+          onChangeText={onChangeText}
+          placeholder="Password"
+          placeholderTextColor="#7b7b7b"
+          textContentType="password"
+        />
+        {/* <Styled.InputWrapper>
           <InputBase
             placeholder="Password"
             placeholderTextColor="#7b7b7b"
@@ -35,7 +47,7 @@ function Login() {
               </Text>
             </TouchableOpacity>
           </Styled.HelpText>
-        </Styled.InputWrapper>
+        </Styled.InputWrapper> */}
         <Btn size="100%" variant="primary">
           <Text fontWeight="bold" color={theme.colors.white}>
             Login

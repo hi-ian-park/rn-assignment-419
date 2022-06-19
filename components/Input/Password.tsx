@@ -31,61 +31,76 @@ const PasswordInput = ({ value, ...props }: PasswordInputProps) => {
     RULES.atLeast1SpecialCharacter(value);
   const isHelpTextShow = isHint && !usable;
 
+  const hintStatus = () => {
+    if (isHint && !usable) return 'hint';
+    if (usable) return 'success';
+    else return 'none';
+  };
+
+  const helpText = {
+    hint: (
+      <Styled.HintWrapper>
+        <Text size="xs">
+          Your password should be{' '}
+          <Text
+            size="xs"
+            fontWeight="bold"
+            textDecoration={RULES.length(value) ? 'line-through' : 'none'}
+          >
+            6-20 characters
+          </Text>{' '}
+          long and must contain{' '}
+          <Text
+            size="xs"
+            fontWeight="bold"
+            textDecoration={
+              RULES.atLeast1Letter(value) ? 'line-through' : 'none'
+            }
+          >
+            1 letter
+          </Text>
+          ,{' '}
+          <Text
+            size="xs"
+            fontWeight="bold"
+            textDecoration={
+              RULES.atLeast1Number(value) ? 'line-through' : 'none'
+            }
+          >
+            1 number
+          </Text>{' '}
+          and{' '}
+          <Text
+            size="xs"
+            fontWeight="bold"
+            textDecoration={
+              RULES.atLeast1SpecialCharacter(value) ? 'line-through' : 'none'
+            }
+          >
+            1 special character
+          </Text>
+          .
+        </Text>
+      </Styled.HintWrapper>
+    ),
+    success: (
+      <Text size="xs" color="#00cb61">
+        Now, that's a secure password 👍
+      </Text>
+    ),
+    error: (
+      <Text size="xs" color="#ff4747">
+        You got a wrong number
+      </Text>
+    ),
+    none: null,
+  };
+
   return (
     <Styled.Container>
       <Styled.Input {...props} secureTextEntry={hidePassword} usable={usable} />
       <Styled.HelpText>
-        {isHelpTextShow ? (
-          <Styled.HintWrapper>
-            <Text size="xs">
-              Your password should be{' '}
-              <Text
-                size="xs"
-                fontWeight="bold"
-                textDecoration={RULES.length(value) ? 'line-through' : 'none'}
-              >
-                6-20 characters
-              </Text>{' '}
-              long and must contain{' '}
-              <Text
-                size="xs"
-                fontWeight="bold"
-                textDecoration={
-                  RULES.atLeast1Letter(value) ? 'line-through' : 'none'
-                }
-              >
-                1 letter
-              </Text>
-              ,{' '}
-              <Text
-                size="xs"
-                fontWeight="bold"
-                textDecoration={
-                  RULES.atLeast1Number(value) ? 'line-through' : 'none'
-                }
-              >
-                1 number
-              </Text>{' '}
-              and{' '}
-              <Text
-                size="xs"
-                fontWeight="bold"
-                textDecoration={
-                  RULES.atLeast1SpecialCharacter(value)
-                    ? 'line-through'
-                    : 'none'
-                }
-              >
-                1 special character
-              </Text>
-              .
-            </Text>
-          </Styled.HintWrapper>
-        ) : (
-          <Text size="xs" color="#00cb61">
-            Now, that's a secure password 👍
-          </Text>
-        )}
+        {helpText[hintStatus()]}
         <TouchableOpacity onPress={handleShowPassword}>
           <Text size="sm" style={{ textDecorationLine: 'underline' }}>
             {hidePassword ? 'Show password' : 'Hide password'}
