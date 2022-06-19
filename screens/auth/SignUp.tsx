@@ -1,18 +1,22 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { SafeAreaView, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 
 import NavigationBar from 'components/Bars/NavigationBar';
 import Btn from 'components/Btn';
-import InputBase from 'components/Input';
+import PasswordInput from 'components/Input/Password';
 import Text from 'components/Text';
-import { theme } from 'styles/theme';
 
 interface SignUpProps {}
 
 const SignUp = (props: SignUpProps) => {
-  const [hidePassword, setHidePassword] = useState(true);
-  const handleShowPassword = () => setHidePassword(!hidePassword);
+  const [password, setPassword] = useState('');
+  const { route } = props;
+  const onChangeText = (text) => setPassword(text);
+  const handlePressNextBtn = () => {
+    console.log(password);
+  };
+  console.log(route.params);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Styled.Container>
@@ -23,44 +27,15 @@ const SignUp = (props: SignUpProps) => {
         <Text size="xl" fontWeight="bold">
           Create your password
         </Text>
-
-        <Styled.InputWrapper>
-          <InputBase
-            placeholder="Password"
-            placeholderTextColor="#7b7b7b"
-            secureTextEntry={hidePassword}
-            textContentType="password"
-          />
-          <Styled.HelpText>
-            <Styled.TextWrapper>
-              <Text size="xs">
-                Your password should be{' '}
-                <Text size="xs" fontWeight="bold">
-                  6-20 characters
-                </Text>{' '}
-                long and must contain{' '}
-                <Text size="xs" fontWeight="bold">
-                  1 letter
-                </Text>
-                ,{' '}
-                <Text size="xs" fontWeight="bold">
-                  1 number
-                </Text>{' '}
-                and{' '}
-                <Text size="xs" fontWeight="bold">
-                  1 special character
-                </Text>
-                .
-              </Text>
-            </Styled.TextWrapper>
-            <TouchableOpacity onPress={handleShowPassword}>
-              <Text size="sm" style={{ textDecorationLine: 'underline' }}>
-                {hidePassword ? 'Show password' : 'Hide password'}
-              </Text>
-            </TouchableOpacity>
-          </Styled.HelpText>
-        </Styled.InputWrapper>
-        <Btn size="100%" variant="primary">
+        <PasswordInput
+          value={password}
+          onChangeText={onChangeText}
+          placeholder="Password"
+          placeholderTextColor="#7b7b7b"
+          textContentType="password"
+          isHint
+        />
+        <Btn size="100%" variant="primary" onPress={handlePressNextBtn}>
           Next
         </Btn>
       </Styled.Container>
