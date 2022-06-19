@@ -32,8 +32,15 @@ function LogInSignUp() {
     const data = await response.json();
 
     console.log(data);
-    if (data.registered) navigation.navigate('/auth/login');
-    else navigation.navigate('/auth/signup');
+    if (data.registered)
+      navigation.navigate('/auth/login', {
+        name: data.name,
+        email: emailInputRef.current,
+      });
+    else
+      navigation.navigate('/auth/signup', {
+        email: emailInputRef.current,
+      });
   };
 
   return (
