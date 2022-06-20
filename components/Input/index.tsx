@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { TextInputProps } from 'react-native';
 import styled from 'styled-components/native';
 
+import { theme } from 'styles/theme';
 import { flexBox, textStyle } from 'styles/utils';
 
 type InputBaseProps = TextInputProps & {
@@ -19,6 +20,7 @@ const InputBase = (props: InputBaseProps) => {
       isFocus={isFocus}
       onFocus={() => setIsFocus(true)}
       onBlur={() => setIsFocus(false)}
+      selectionColor={theme.colors.primary}
     />
   );
 };

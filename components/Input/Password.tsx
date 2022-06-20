@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { TextInputProps, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 
@@ -21,7 +21,6 @@ const RULES = {
 
 const PasswordInput = ({ value, ...props }: PasswordInputProps) => {
   const { isHint } = props;
-
   const [hidePassword, setHidePassword] = useState(true);
   const handleShowPassword = () => setHidePassword(!hidePassword);
   const usable =
@@ -29,13 +28,12 @@ const PasswordInput = ({ value, ...props }: PasswordInputProps) => {
     RULES.atLeast1Letter(value) &&
     RULES.atLeast1Number(value) &&
     RULES.atLeast1SpecialCharacter(value);
-  const isHelpTextShow = isHint && !usable;
 
-  const hintStatus = () => {
+  const getHintStatus = useCallback(() => {
     if (isHint && !usable) return 'hint';
     if (usable) return 'success';
     else return 'none';
-  };
+  }, [isHint]);
 
   const helpText = {
     hint: (
@@ -100,7 +98,7 @@ const PasswordInput = ({ value, ...props }: PasswordInputProps) => {
     <Styled.Container>
       <Styled.Input {...props} secureTextEntry={hidePassword} usable={usable} />
       <Styled.HelpText>
-        {helpText[hintStatus()]}
+        {helpText[getHintStatus()]}
         <TouchableOpacity onPress={handleShowPassword}>
           <Text size="sm" style={{ textDecorationLine: 'underline' }}>
             {hidePassword ? 'Show password' : 'Hide password'}
