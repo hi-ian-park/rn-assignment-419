@@ -1,37 +1,20 @@
-import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useRef } from 'react';
-import { Alert, SafeAreaView, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
 
-import NavigationBar from 'components/Bars/NavigationBar';
 import Btn from 'components/Btn';
 import InputBase from 'components/Input';
 import Text from 'components/Text';
-import { flexBox } from 'styles/utils';
+import { useStores } from 'store/useStore';
 
 function LogInSignUp() {
+  const store = useStores().authStore;
   const navigation = useNavigation();
   const emailInputRef = useRef('');
   const onChangeText = (text: string) => (emailInputRef.current = text);
   const handlePressNextBtn = async () => {
-    console.log('next button!');
-    const response = await fetch(
-      'https://auth-dev.sodacrew.com/auth/check-registration',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8',
-        },
-        body: JSON.stringify({
-          email: emailInputRef.current,
-        }),
-      }
-    ).catch((err) => Alert.alert(err));
-    console.log(response.status);
-    const data = await response.json();
-
-    console.log(data);
+    const data = await store.checkRegistration(emailInputRef.current);
     if (data.registered)
       navigation.navigate('/auth/login', {
         name: data.name,

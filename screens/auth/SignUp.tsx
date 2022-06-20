@@ -1,8 +1,7 @@
-import React, { useRef, useState } from 'react';
-import { SafeAreaView, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
 
-import NavigationBar from 'components/Bars/NavigationBar';
 import Btn from 'components/Btn';
 import PasswordInput from 'components/Input/Password';
 import Text from 'components/Text';
@@ -12,7 +11,7 @@ interface SignUpProps {}
 const SignUp = (props: SignUpProps) => {
   const [password, setPassword] = useState('');
   const { route } = props;
-  const onChangeText = (text) => setPassword(text);
+  const onChangeText = (text: string) => setPassword(text);
   const handlePressNextBtn = () => {
     console.log(password);
   };

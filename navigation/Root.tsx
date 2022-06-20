@@ -7,6 +7,7 @@ import MainTabs from './MainTabs';
 const RootStack = createNativeStackNavigator();
 
 function Root() {
+  // TODO: Login 이 되어있는 user인지 아닌지 체크!
   const isLoggedIn = false;
   const initialRouteName = isLoggedIn ? '/' : '/auth';
 

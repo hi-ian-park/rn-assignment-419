@@ -1,36 +1,24 @@
 import React, { useState } from 'react';
-import { SafeAreaView, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
 
 import Btn from 'components/Btn';
 import Text from 'components/Text';
+import { useStores } from 'store/useStore';
 import { theme } from 'styles/theme';
 
 import PasswordInput from '../../components/Input/Password';
 
 function Login({ route }) {
   // TODO: navigate route로 email 보내줘야함~!
+  const store = useStores().authStore;
+  console.log('store: ', store);
   const [password, setPassword] = useState('');
   const onChangeText = (text) => setPassword(text);
   const handlePressLoginBtn = async () => {
-    console.log({
-      email: route.params.email,
-      password,
-    });
-    const response = await fetch('https://auth-dev.sodacrew.com/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: route.params.email,
-        password,
-      }),
-    });
-    const data = await response.json();
-    console.log(data);
+    await store.login(route.params.email, password);
+    console.log(store.currentUser);
   };
-  console.log(route);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Styled.Container>
