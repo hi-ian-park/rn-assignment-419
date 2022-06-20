@@ -16,6 +16,8 @@ import { StatusBar } from 'expo-status-bar';
 import { connectToDevTools } from 'react-devtools-core';
 import { ThemeProvider } from 'styled-components';
 
+import StoreProvider from 'store/StoreProvider';
+
 import Root from './navigation/Root';
 import { theme } from './styles/theme';
 
@@ -44,10 +46,12 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <NavigationContainer>
-        <StatusBar />
-        <Root />
-      </NavigationContainer>
+      <StoreProvider>
+        <NavigationContainer>
+          <StatusBar />
+          <Root />
+        </NavigationContainer>
+      </StoreProvider>
     </ThemeProvider>
   );
 }
