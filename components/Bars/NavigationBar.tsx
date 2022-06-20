@@ -27,6 +27,5 @@ const Styled = {
   Header: styled.View`
     ${flexBox('row', 'center', 'start')}
     height: 50px;
-    margin-bottom: 32px;
   `,
 };

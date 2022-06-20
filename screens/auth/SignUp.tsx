@@ -20,7 +20,6 @@ const SignUp = (props: SignUpProps) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Styled.Container>
-        <NavigationBar />
         <Text size="lg" fontWeight="bold">
           Nice to meet you 👋
         </Text>
@@ -48,7 +47,7 @@ export default SignUp;
 const Styled = {
   Container: styled.View`
     flex: 1;
-    padding: 0 16px;
+    padding: 32px 16px 0 16px;
   `,
 
   InputWrapper: styled.View`

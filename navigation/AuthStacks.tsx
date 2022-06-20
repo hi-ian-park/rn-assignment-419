@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
+import NavigationBar from 'components/Bars/NavigationBar';
 import LogInSignUp from 'screens/auth/LogInSignUp';
 import Login from 'screens/auth/Login';
 import Onboard from 'screens/auth/Onboard';
@@ -13,10 +14,19 @@ function AuthStacks() {
     <NativeStack.Navigator
       initialRouteName="/auth/onboard"
       screenOptions={{
-        headerShown: false,
+        headerLeft: NavigationBar,
+        title: '',
+        headerStyle: {
+          backgroundColor: '#f2f2f2',
+        },
+        headerShadowVisible: false,
       }}
     >
-      <NativeStack.Screen name="/auth/onboard" component={Onboard} />
+      <NativeStack.Screen
+        name="/auth/onboard"
+        component={Onboard}
+        options={{ headerShown: false }}
+      />
       <NativeStack.Screen name="/auth/login-signup" component={LogInSignUp} />
       <NativeStack.Screen name="/auth/signup" component={SignUp} />
       <NativeStack.Screen name="/auth/login" component={Login} />

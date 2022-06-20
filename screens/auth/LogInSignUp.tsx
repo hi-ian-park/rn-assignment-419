@@ -46,7 +46,6 @@ function LogInSignUp() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Styled.Container>
-        <NavigationBar />
         <Text fontWeight="bold" size="xl">
           Log in or Sign up{'\n'}with email
         </Text>
@@ -70,7 +69,7 @@ function LogInSignUp() {
 const Styled = {
   Container: styled.View`
     flex: 1;
-    padding: 0 16px;
+    padding: 32px 16px 0 16px;
   `,
 
   H1: styled(Text)`
