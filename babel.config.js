@@ -26,6 +26,8 @@ module.exports = function (api) {
             styles: './styles',
             navigation: './navigation',
             hooks: './hooks',
+            service: './service',
+            types: './types',
           },
         },
       ],
