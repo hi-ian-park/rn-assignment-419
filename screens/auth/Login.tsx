@@ -11,14 +11,14 @@ import PasswordInput from '../../components/Input/Password';
 
 function Login({ route }) {
   // TODO: navigate route로 email 보내줘야함~!
-  const store = useStores().authStore;
+  const store = useStores();
   console.log('store: ', store);
   const [password, setPassword] = useState('');
   const onChangeText = (text) => setPassword(text);
   const handlePressLoginBtn = async () => {
-    await store.login(route.params.email, password);
-    console.log(store.currentUser);
+    await store.auth.login(route.params.email, password);
   };
+  console.log(store.auth.accessToken);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Styled.Container>

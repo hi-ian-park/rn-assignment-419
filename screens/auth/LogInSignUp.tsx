@@ -9,21 +9,18 @@ import Text from 'components/Text';
 import { useStores } from 'store/useStore';
 
 function LogInSignUp() {
-  const store = useStores().authStore;
+  const store = useStores().auth;
   const navigation = useNavigation();
   const emailInputRef = useRef('');
   const onChangeText = (text: string) => (emailInputRef.current = text);
   const handlePressNextBtn = async () => {
-    const data = await store.checkRegistration(emailInputRef.current);
-    if (data.registered)
-      navigation.navigate('/auth/login', {
-        name: data.name,
-        email: emailInputRef.current,
-      });
-    else
-      navigation.navigate('/auth/signup', {
-        email: emailInputRef.current,
-      });
+    const { redirectTo, name } = await store.checkRegistration(
+      emailInputRef.current
+    );
+    navigation.navigate(redirectTo, {
+      name,
+      email: emailInputRef.current,
+    });
   };
 
   return (

@@ -1,3 +1,8 @@
+/*
+ * TODO: 삭제 예정
+ * auth 나 user action 쪽에서만 필요한 함수들이라서 action 쪽에서 만들어 사용할 예정
+ */
+
 import { authUrl } from './api-config';
 import { getToken } from './auth.storage';
 import { DEFAULT_POST_HEADERS } from './default.headers';
@@ -52,7 +57,8 @@ export const userClient = {
       },
     };
 
-    const data = await fetch(url, options).then((res) => res.json());
-    return data;
+    const response = await fetch(url, options);
+    const data = await response.json();
+    return { response, data };
   },
 };

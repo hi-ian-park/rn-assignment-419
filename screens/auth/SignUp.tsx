@@ -15,7 +15,6 @@ const SignUp = (props: SignUpProps) => {
   const handlePressNextBtn = () => {
     console.log(password);
   };
-  console.log(route.params);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Styled.Container>
