@@ -11,7 +11,3 @@ export type User = {
   authority: string;
   destination: string;
 };
-
-export type UserResponse = {
-  user: User;
-};
