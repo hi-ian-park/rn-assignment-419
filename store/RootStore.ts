@@ -1,19 +1,35 @@
-import { Instance, types } from 'mobx-state-tree';
+import { Instance, types, flow } from 'mobx-state-tree';
 
-import { AuthStore } from './AuthStore';
+import { authUrl } from 'service/api-config';
+import { getToken } from 'service/auth.storage';
+import { DEFAULT_HEADERS } from 'service/default.headers';
+
+import { User } from './UserStore';
+import { AuthStore } from './auth/AuthStore';
 
 export const RootStore = types
   .model('RootStore', {
-    authStore: types.optional(AuthStore, {
-      currentUser: undefined,
-    }),
+    auth: types.optional(AuthStore, {}),
+    user: types.maybe(User),
   })
   .actions((self) => {
-    const afterCreate = () => {
-      self.authStore.getCurrentUser();
-    };
+    const getCurrentUser = flow(function* () {
+      const url = authUrl.getCurrent;
+      const options = {
+        headers: {
+          Authorization: `${yield getToken()}`,
+          ...DEFAULT_HEADERS,
+        },
+      };
+      try {
+        const data = yield fetch(url, options).then((res) => res.json());
+        self.user = data;
+      } catch (err) {
+        throw err;
+      }
+    });
 
-    return { afterCreate };
+    return { getCurrentUser };
   });
 
 export type RootStoreType = Instance<typeof RootStore>;
