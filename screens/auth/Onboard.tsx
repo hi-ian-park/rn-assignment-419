@@ -6,26 +6,9 @@ import styled from 'styled-components/native';
 import BottomSheet from 'components/BottomSheet';
 import Btn from 'components/Btn';
 import SocialLoginButton from 'components/Btn/SocialLoginButton';
-import { getToken, removeToken } from 'service/auth.storage';
-import { useStores } from 'store/useStore';
 import { flexBox } from 'styles/utils';
 
 function Onboard() {
-  const store = useStores();
-  // console.log(store.user);
-  useEffect(() => {
-    (async () => {
-      console.log('Onboard useEffect1');
-      await store.auth.setToken();
-      console.log(store.auth.accessToken);
-      if (store.auth.accessToken) {
-        await store.getCurrentUser();
-      } else {
-        console.log('user 없음');
-      }
-    })();
-  }, [store.auth.accessToken]);
-
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const navigation = useNavigation();
 
