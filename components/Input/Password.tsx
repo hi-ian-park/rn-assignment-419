@@ -33,7 +33,7 @@ const PasswordInput = ({ value, ...props }: PasswordInputProps) => {
     if (isHint && !usable) return 'hint';
     if (usable) return 'success';
     else return 'none';
-  }, [isHint]);
+  }, [isHint, usable]);
 
   const helpText = {
     hint: (
@@ -82,14 +82,18 @@ const PasswordInput = ({ value, ...props }: PasswordInputProps) => {
       </Styled.HintWrapper>
     ),
     success: (
-      <Text size="xs" color="#00cb61">
-        Now, that's a secure password 👍
-      </Text>
+      <Styled.HintWrapper>
+        <Text size="xs" color="#00cb61">
+          Now, that's a secure password 👍
+        </Text>
+      </Styled.HintWrapper>
     ),
     error: (
-      <Text size="xs" color="#ff4747">
-        You got a wrong number
-      </Text>
+      <Styled.HintWrapper>
+        <Text size="xs" color="#ff4747">
+          You got a wrong number
+        </Text>
+      </Styled.HintWrapper>
     ),
     none: null,
   };
