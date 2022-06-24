@@ -13,10 +13,12 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
 import { connectToDevTools } from 'react-devtools-core';
 import { ThemeProvider } from 'styled-components';
 
 import StoreProvider from 'store/StoreProvider';
+import { useStores } from 'store/useStore';
 
 import Root from './navigation/Root';
 import { theme } from './styles/theme';
@@ -29,6 +31,7 @@ if (__DEV__) {
 }
 
 export default function App() {
+  const store = useStores();
   const [isNotoSansFontsLoaded] = useNotoSansKrFonts({
     NotoSansKR_700Bold,
     NotoSansKR_500Medium,
@@ -41,6 +44,17 @@ export default function App() {
   });
 
   const isResourceLoaded = !(isNotoSansFontsLoaded && isPoppinsFontsLoaded);
+
+  useEffect(() => {
+    (async () => {
+      await store.auth.setToken();
+      if (store.auth.accessToken) {
+        await store.getCurrentUser();
+      } else {
+        console.log('user 없음');
+      }
+    })();
+  }, [store.auth.accessToken]);
 
   if (isResourceLoaded) return <AppLoading />;
 
