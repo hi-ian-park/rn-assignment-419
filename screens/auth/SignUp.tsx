@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
@@ -10,10 +11,11 @@ interface SignUpProps {}
 
 const SignUp = (props: SignUpProps) => {
   const [password, setPassword] = useState('');
+  const navigation = useNavigation();
   const { route } = props;
   const onChangeText = (text: string) => setPassword(text);
   const handlePressNextBtn = () => {
-    console.log(password);
+    navigation.navigate('/auth/enter-full-name', { ...route.params, password });
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>

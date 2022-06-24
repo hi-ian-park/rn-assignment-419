@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import NavigationBar from 'components/Bars/NavigationBar';
+import EnterFullName from 'screens/auth/EnterFullName';
 import LogInSignUp from 'screens/auth/LogInSignUp';
 import Login from 'screens/auth/Login';
 import Onboard from 'screens/auth/Onboard';
@@ -29,6 +30,10 @@ function AuthStacks() {
       <NativeStack.Screen name="/auth/login-signup" component={LogInSignUp} />
       <NativeStack.Screen name="/auth/signup" component={SignUp} />
       <NativeStack.Screen name="/auth/login" component={Login} />
+      <NativeStack.Screen
+        name="/auth/enter-full-name"
+        component={EnterFullName}
+      />
     </NativeStack.Navigator>
   );
 }

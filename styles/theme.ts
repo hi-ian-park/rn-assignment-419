@@ -7,6 +7,7 @@ const colors = {
   ghost: 'transparent',
   border: '#bfbfbf',
   text: '#0f0f0f',
+  hintText: '#3c3c3c',
   placeholder: '#7b7b7b',
 };
 

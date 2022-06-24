@@ -10,9 +10,7 @@ import { theme } from 'styles/theme';
 import PasswordInput from '../../components/Input/Password';
 
 function Login({ route }) {
-  // TODO: navigate route로 email 보내줘야함~!
   const store = useStores();
-  console.log('store: ', store);
   const [password, setPassword] = useState('');
   const onChangeText = (text) => setPassword(text);
   const handlePressLoginBtn = async () => {

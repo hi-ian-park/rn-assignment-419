@@ -18,6 +18,7 @@ declare module 'styled-components' {
       border: string;
       ghost: string;
       text: string;
+      hintText: string;
       placeholder: string;
     };
 

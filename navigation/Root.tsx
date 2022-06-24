@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
+import { removeToken } from 'service/auth.storage';
 import { useStores } from 'store/useStore';
 
 import AuthStacks from './AuthStacks';
