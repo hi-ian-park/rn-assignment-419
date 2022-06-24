@@ -9,12 +9,30 @@ import Text from 'components/Text';
 
 interface SignUpProps {}
 
+const RULES = {
+  length: (value) => value.length >= 6 && value.length <= 20,
+  atLeast1Letter: (value) => /[a-zA-Z]+/.test(value),
+  atLeast1Number: (value) => /[0-9]+/.test(value),
+  atLeast1SpecialCharacter: (value) =>
+    /[!"#$%&'()*+,-./:;<=>?@\[\\\]^_`{|}~]+/.test(value),
+};
+
 const SignUp = (props: SignUpProps) => {
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
   const { route } = props;
   const onChangeText = (text: string) => setPassword(text);
   const handlePressNextBtn = () => {
+    const usable =
+      RULES.length(password) &&
+      RULES.atLeast1Letter(password) &&
+      RULES.atLeast1Number(password) &&
+      RULES.atLeast1SpecialCharacter(password);
+
+    if (!usable) {
+      alert('지원하는 비밀번호 형식이 아닙니다');
+      return;
+    }
     navigation.navigate('/auth/enter-full-name', { ...route.params, password });
   };
   return (
@@ -32,6 +50,7 @@ const SignUp = (props: SignUpProps) => {
           placeholder="Password"
           placeholderTextColor="#7b7b7b"
           textContentType="password"
+          validation={RULES}
           isHint
         />
         <Btn size="100%" variant="primary" onPress={handlePressNextBtn}>

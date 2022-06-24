@@ -6,28 +6,25 @@ import Text from 'components/Text';
 
 import InputBase from '.';
 
+type PasswordValidationType = {
+  [key: string]: (text: string) => boolean;
+};
+
 type PasswordInputProps = TextInputProps & {
   value: string;
+  validation?: PasswordValidationType;
   isHint?: boolean;
 };
 
-const RULES = {
-  length: (value) => value.length >= 6 && value.length <= 20,
-  atLeast1Letter: (value) => /[a-zA-Z]+/.test(value),
-  atLeast1Number: (value) => /[0-9]+/.test(value),
-  atLeast1SpecialCharacter: (value) =>
-    /[!"#$%&'()*+,-./:;<=>?@\[\\\]^_`{|}~]+/.test(value),
-};
-
-const PasswordInput = ({ value, ...props }: PasswordInputProps) => {
+const PasswordInput = ({ value, validation, ...props }: PasswordInputProps) => {
   const { isHint } = props;
   const [hidePassword, setHidePassword] = useState(true);
   const handleShowPassword = () => setHidePassword(!hidePassword);
   const usable =
-    RULES.length(value) &&
-    RULES.atLeast1Letter(value) &&
-    RULES.atLeast1Number(value) &&
-    RULES.atLeast1SpecialCharacter(value);
+    validation.length(value) &&
+    validation.atLeast1Letter(value) &&
+    validation.atLeast1Number(value) &&
+    validation.atLeast1SpecialCharacter(value);
 
   const getHintStatus = useCallback(() => {
     if (isHint && !usable) return 'hint';
@@ -43,7 +40,7 @@ const PasswordInput = ({ value, ...props }: PasswordInputProps) => {
           <Text
             size="xs"
             fontWeight="bold"
-            textDecoration={RULES.length(value) ? 'line-through' : 'none'}
+            textDecoration={validation.length(value) ? 'line-through' : 'none'}
           >
             6-20 characters
           </Text>{' '}
@@ -52,7 +49,7 @@ const PasswordInput = ({ value, ...props }: PasswordInputProps) => {
             size="xs"
             fontWeight="bold"
             textDecoration={
-              RULES.atLeast1Letter(value) ? 'line-through' : 'none'
+              validation.atLeast1Letter(value) ? 'line-through' : 'none'
             }
           >
             1 letter
@@ -62,7 +59,7 @@ const PasswordInput = ({ value, ...props }: PasswordInputProps) => {
             size="xs"
             fontWeight="bold"
             textDecoration={
-              RULES.atLeast1Number(value) ? 'line-through' : 'none'
+              validation.atLeast1Number(value) ? 'line-through' : 'none'
             }
           >
             1 number
@@ -72,7 +69,9 @@ const PasswordInput = ({ value, ...props }: PasswordInputProps) => {
             size="xs"
             fontWeight="bold"
             textDecoration={
-              RULES.atLeast1SpecialCharacter(value) ? 'line-through' : 'none'
+              validation.atLeast1SpecialCharacter(value)
+                ? 'line-through'
+                : 'none'
             }
           >
             1 special character

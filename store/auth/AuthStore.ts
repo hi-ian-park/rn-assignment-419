@@ -3,6 +3,7 @@ import { flow, types } from 'mobx-state-tree';
 import { authUrl } from 'service/api-config';
 import { getToken, persistToken } from 'service/auth.storage';
 import { DEFAULT_POST_HEADERS } from 'service/default.headers';
+const EMAIL_RGX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 export const AuthStore = types
   .model('AuthStore', {
@@ -15,6 +16,11 @@ export const AuthStore = types
     });
 
     const checkRegistration = flow(function* (email: string) {
+      const invalidEmail = !email.match(EMAIL_RGX);
+      if (invalidEmail) {
+        alert('지원하는 이메일 형식이 아닙니다');
+        return;
+      }
       const url = authUrl.checkRegistration;
       const options = {
         method: 'POST',
@@ -32,11 +38,7 @@ export const AuthStore = types
       }
     });
 
-    const signup = flow(function* (
-      email: string,
-      password: string,
-      username: string
-    ) {
+    const signup = flow(function* ({ email, password, username }) {
       const url = authUrl.register;
       const options = {
         method: 'POST',
@@ -50,7 +52,7 @@ export const AuthStore = types
         yield persistToken(accessToken);
         self.accessToken = accessToken;
       } catch (err) {
-        throw err;
+        console.error(err);
       }
     });
 
