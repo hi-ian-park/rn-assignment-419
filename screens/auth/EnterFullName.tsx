@@ -4,17 +4,25 @@ import styled from 'styled-components/native';
 import Btn from 'components/Btn';
 import InputBase from 'components/Input';
 import Text from 'components/Text';
+import { getToken } from 'service/auth.storage';
+import { useStores } from 'store/useStore';
 import { theme } from 'styles/theme';
 
 interface EnterFullNameProps {}
 
 const EnterFullName = (props: EnterFullNameProps) => {
+  const store = useStores();
   const nameInputRef = useRef('');
   const onChangeText = (text) => {
     nameInputRef.current = text;
   };
-  const handlePressSignUpBtn = () => {
-    console.log({ ...props.route.params, name: nameInputRef.current });
+  const handlePressSignUpBtn = async () => {
+    await store.auth.signup({
+      ...props.route.params,
+      name: nameInputRef.current,
+    });
+    const token = await getToken();
+    console.log(token);
   };
   return (
     <Styled.Container>

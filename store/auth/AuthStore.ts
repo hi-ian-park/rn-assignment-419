@@ -38,22 +38,18 @@ export const AuthStore = types
       }
     });
 
-    const signup = flow(function* ({ email, password, username }) {
+    const signup = flow(function* (payload) {
       const url = authUrl.register;
       const options = {
         method: 'POST',
         headers: DEFAULT_POST_HEADERS,
-        body: JSON.stringify({ email, password, username, locale: 'en' }),
+        body: JSON.stringify({ ...payload, locale: 'en' }),
       };
-      try {
-        const { accessToken } = yield fetch(url, options).then((res) =>
-          res.json()
-        );
-        yield persistToken(accessToken);
-        self.accessToken = accessToken;
-      } catch (err) {
-        console.error(err);
-      }
+      const { accessToken } = yield fetch(url, options).then((res) =>
+        res.json()
+      );
+      yield persistToken(accessToken);
+      self.accessToken = accessToken;
     });
 
     const login = flow(function* (email: string, password: string) {

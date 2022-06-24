@@ -3,11 +3,10 @@ import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
 
 import Btn from 'components/Btn';
+import PasswordInput from 'components/Input/Password';
 import Text from 'components/Text';
 import { useStores } from 'store/useStore';
 import { theme } from 'styles/theme';
-
-import PasswordInput from '../../components/Input/Password';
 
 function Login({ route }) {
   const store = useStores();
