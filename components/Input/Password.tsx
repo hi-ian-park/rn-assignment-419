@@ -21,10 +21,10 @@ const PasswordInput = ({ value, validation, ...props }: PasswordInputProps) => {
   const [hidePassword, setHidePassword] = useState(true);
   const handleShowPassword = () => setHidePassword(!hidePassword);
   const usable =
-    validation.length(value) &&
-    validation.atLeast1Letter(value) &&
-    validation.atLeast1Number(value) &&
-    validation.atLeast1SpecialCharacter(value);
+    validation?.length(value) &&
+    validation?.atLeast1Letter(value) &&
+    validation?.atLeast1Number(value) &&
+    validation?.atLeast1SpecialCharacter(value);
 
   const getHintStatus = useCallback(() => {
     if (isHint && !usable) return 'hint';
@@ -40,7 +40,7 @@ const PasswordInput = ({ value, validation, ...props }: PasswordInputProps) => {
           <Text
             size="xs"
             fontWeight="bold"
-            textDecoration={validation.length(value) ? 'line-through' : 'none'}
+            textDecoration={validation?.length(value) ? 'line-through' : 'none'}
           >
             6-20 characters
           </Text>{' '}
@@ -49,7 +49,7 @@ const PasswordInput = ({ value, validation, ...props }: PasswordInputProps) => {
             size="xs"
             fontWeight="bold"
             textDecoration={
-              validation.atLeast1Letter(value) ? 'line-through' : 'none'
+              validation?.atLeast1Letter(value) ? 'line-through' : 'none'
             }
           >
             1 letter
@@ -59,7 +59,7 @@ const PasswordInput = ({ value, validation, ...props }: PasswordInputProps) => {
             size="xs"
             fontWeight="bold"
             textDecoration={
-              validation.atLeast1Number(value) ? 'line-through' : 'none'
+              validation?.atLeast1Number(value) ? 'line-through' : 'none'
             }
           >
             1 number
@@ -69,7 +69,7 @@ const PasswordInput = ({ value, validation, ...props }: PasswordInputProps) => {
             size="xs"
             fontWeight="bold"
             textDecoration={
-              validation.atLeast1SpecialCharacter(value)
+              validation?.atLeast1SpecialCharacter(value)
                 ? 'line-through'
                 : 'none'
             }
