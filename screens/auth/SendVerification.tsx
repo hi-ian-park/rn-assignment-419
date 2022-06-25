@@ -10,21 +10,12 @@ import { flexBox } from 'styles/utils';
 
 interface SendVerificationProps {}
 
-const parseJwt = (token) => {
-  try {
-    return JSON.parse(atob(token.split('.')[1]));
-  } catch (e) {
-    return null;
-  }
-};
-
 const SendVerification = (props: SendVerificationProps) => {
   const store = useStores();
   const { route } = props;
 
   const handlePressResendBtn = async () => {
     console.log(store.auth.accessToken);
-    console.log(parseJwt(store.auth.accessToken));
   };
 
   return (
