@@ -1,4 +1,4 @@
-import { flow, types } from 'mobx-state-tree';
+import { flow, getParent, types } from 'mobx-state-tree';
 
 import { authUrl } from 'service/api-config';
 import { getToken, persistToken } from 'service/auth.storage';
@@ -38,7 +38,7 @@ export const AuthStore = types
       }
     });
 
-    const signup = flow(function* (payload) {
+    const signup = flow(function* (payload: SignupPayloadType) {
       const url = authUrl.register;
       const options = {
         method: 'POST',
@@ -52,23 +52,34 @@ export const AuthStore = types
       self.accessToken = accessToken;
     });
 
-    const login = flow(function* (email: string, password: string) {
+    const login = flow(function* (payload: LoginPayloadType) {
       const url = authUrl.login;
       const options = {
         method: 'POST',
         headers: DEFAULT_POST_HEADERS,
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(payload),
       };
-      try {
-        const { accessToken } = yield fetch(url, options).then((res) =>
-          res.json()
-        );
+      const response = yield fetch(url, options);
+      const { accessToken, message } = yield response.json();
+
+      if (response.status === 200) {
         yield persistToken(accessToken);
         self.accessToken = accessToken;
-      } catch (err) {
-        throw err;
       }
+
+      return { response, accessToken, message };
     });
 
     return { setToken, checkRegistration, login, signup };
   });
+
+type LoginPayloadType = {
+  email: string;
+  password: string;
+};
+
+type SignupPayloadType = {
+  email: string;
+  name: string;
+  password: string;
+};
