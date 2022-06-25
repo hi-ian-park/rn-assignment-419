@@ -16,12 +16,10 @@ export const RootStore = types
       if (response.status !== 200) return;
       if (response.status === 200) {
         self.user = data;
-        console.log('self.user: ', self.user);
       }
     });
 
     const checkActiveUser = flow(function* () {
-      console.log('self.user.auth : ', self.user?.authority);
       if (!self.auth?.accessToken) return false;
 
       return self.user?.authority === 'ACTIVATED_USER';

@@ -1,3 +1,4 @@
+import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
@@ -21,9 +22,41 @@ function MainTabs() {
         tabBarInactiveTintColor: '#9d9d9d',
       }}
     >
-      <Tab.Screen name="/home" component={Home} />
-      <Tab.Screen name="/search" component={Search} />
-      <Tab.Screen name="/account" component={Account} />
+      <Tab.Screen
+        name="/home"
+        component={Home}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons
+              name="home-outline"
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="/search"
+        component={Search}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="search" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="/account"
+        component={Account}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons
+              name="account-circle-outline"
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 }
