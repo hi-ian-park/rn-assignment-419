@@ -1,7 +1,6 @@
 import { Instance, types, flow } from 'mobx-state-tree';
 
 import { authUrl } from 'service/api-config';
-import { getToken } from 'service/auth.storage';
 import { DEFAULT_HEADERS } from 'service/default.headers';
 
 import { User } from './UserStore';
@@ -17,15 +16,15 @@ export const RootStore = types
       const url = authUrl.getCurrent;
       const options = {
         headers: {
-          Authorization: `${yield getToken()}`,
+          Authorization: self.auth.accessToken,
           ...DEFAULT_HEADERS,
         },
       };
-      try {
-        const data = yield fetch(url, options).then((res) => res.json());
+      const response = yield fetch(url, options);
+      const data = yield response.json();
+      if (response.status === 200) {
         self.user = data;
-      } catch (err) {
-        throw err;
+        console.log('self.user: ', self.user);
       }
     });
 

@@ -1,4 +1,4 @@
-import { types } from 'mobx-state-tree';
+import { flow, types } from 'mobx-state-tree';
 
 export const User = types //
   .model('User', {
@@ -12,5 +12,5 @@ export const User = types //
     emailNotification: types.boolean,
     pushNotification: types.boolean,
     authority: types.string,
-    destination: types.string,
+    destination: types.maybeNull(types.string),
   });

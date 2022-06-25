@@ -11,8 +11,10 @@ export const AuthStore = types
   })
   .actions((self) => {
     const setToken = flow(function* () {
-      const asyncToken = yield getToken();
-      self.accessToken = asyncToken;
+      const storageToken = yield getToken();
+      if (storageToken) {
+        self.accessToken = storageToken;
+      }
     });
 
     const checkRegistration = flow(function* (email: string) {
