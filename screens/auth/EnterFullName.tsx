@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { useRef } from 'react';
 import styled from 'styled-components/native';
 
@@ -12,17 +13,21 @@ interface EnterFullNameProps {}
 
 const EnterFullName = (props: EnterFullNameProps) => {
   const store = useStores();
+  const { route } = props;
+  const navigation = useNavigation();
   const nameInputRef = useRef('');
   const onChangeText = (text) => {
     nameInputRef.current = text;
   };
   const handlePressSignUpBtn = async () => {
     await store.auth.signup({
-      ...props.route.params,
+      ...route.params,
       name: nameInputRef.current,
     });
-    const token = await getToken();
-    console.log(token);
+    navigation.navigate('/auth/send-verification', {
+      accessToken: store.auth?.accessToken,
+      email: route.params.email,
+    });
   };
   return (
     <Styled.Container>

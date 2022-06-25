@@ -5,6 +5,7 @@ import EnterFullName from 'screens/auth/EnterFullName';
 import LogInSignUp from 'screens/auth/LogInSignUp';
 import Login from 'screens/auth/Login';
 import Onboard from 'screens/auth/Onboard';
+import SendVerification from 'screens/auth/SendVerification';
 import SignUp from 'screens/auth/SignUp';
 
 const NativeStack = createNativeStackNavigator();
@@ -33,6 +34,10 @@ function AuthStacks() {
       <NativeStack.Screen
         name="/auth/enter-full-name"
         component={EnterFullName}
+      />
+      <NativeStack.Screen
+        name="/auth/send-verification"
+        component={SendVerification}
       />
     </NativeStack.Navigator>
   );

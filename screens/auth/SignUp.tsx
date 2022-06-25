@@ -35,6 +35,7 @@ const SignUp = (props: SignUpProps) => {
     }
     navigation.navigate('/auth/enter-full-name', { ...route.params, password });
   };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Styled.Container>

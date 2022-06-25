@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
@@ -10,12 +11,32 @@ import { theme } from 'styles/theme';
 
 function Login({ route }) {
   const store = useStores();
+  const navigation = useNavigation();
   const [password, setPassword] = useState('');
   const onChangeText = (text) => setPassword(text);
   const handlePressLoginBtn = async () => {
-    await store.auth.login(route.params.email, password);
+    const { response, message } = await store.auth.login({
+      email: route.params.email,
+      password,
+    });
+
+    if (response.status !== 200) {
+      alert(message);
+      return;
+    }
+
+    const isEmailVerified = await store.checkActiveUser();
+
+    if (isEmailVerified) {
+      console.log('홈으로 갈게');
+    } else {
+      navigation.navigate('/auth/send-verification', {
+        ...route.params,
+        password,
+      });
+    }
   };
-  console.log(store.auth.accessToken);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Styled.Container>
