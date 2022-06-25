@@ -13,7 +13,7 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { connectToDevTools } from 'react-devtools-core';
 import { ThemeProvider } from 'styled-components';
 
@@ -32,6 +32,7 @@ if (__DEV__) {
 
 export default function App() {
   const store = useStores();
+  const [isStoreReady, setIsStoreReady] = useState(false);
   const [isNotoSansFontsLoaded] = useNotoSansKrFonts({
     NotoSansKR_700Bold,
     NotoSansKR_500Medium,
@@ -43,20 +44,22 @@ export default function App() {
     Poppins_600SemiBold,
   });
 
-  const isResourceLoaded = !(isNotoSansFontsLoaded && isPoppinsFontsLoaded);
+  const isResourceReady = isNotoSansFontsLoaded && isPoppinsFontsLoaded;
+  const isAppReady = isStoreReady && isResourceReady;
 
   useEffect(() => {
     (async () => {
       await store.auth.setToken();
-      if (store.auth.accessToken) {
-        await store.getCurrentUser();
+      if (store.auth?.accessToken) {
+        await store.setCurrentUser();
       } else {
         console.log('user 없음');
       }
+      setIsStoreReady(true);
     })();
   }, [store.auth.accessToken]);
 
-  if (isResourceLoaded) return <AppLoading />;
+  if (!isAppReady) return <AppLoading />;
 
   return (
     <ThemeProvider theme={theme}>

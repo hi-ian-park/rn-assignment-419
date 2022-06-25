@@ -2,6 +2,7 @@ import { Instance, types, flow } from 'mobx-state-tree';
 
 import { authUrl } from 'service/api-config';
 import { DEFAULT_HEADERS } from 'service/default.headers';
+import { userClient } from 'service/user.client';
 
 import { User } from './UserStore';
 import { AuthStore } from './auth/AuthStore';
@@ -12,16 +13,8 @@ export const RootStore = types
     user: types.maybe(User),
   })
   .actions((self) => {
-    const getCurrentUser = flow(function* () {
-      const url = authUrl.getCurrent;
-      const options = {
-        headers: {
-          Authorization: self.auth.accessToken,
-          ...DEFAULT_HEADERS,
-        },
-      };
-      const response = yield fetch(url, options);
-      const data = yield response.json();
+    const setCurrentUser = flow(function* () {
+      const { response, data } = yield userClient.getCurrent();
       if (response.status === 200) {
         self.user = data;
         console.log('self.user: ', self.user);
@@ -29,13 +22,13 @@ export const RootStore = types
     });
 
     const checkActiveUser = flow(function* () {
-      console.log(self.user?.authority);
+      console.log('self.user.auth : ', self.user?.authority);
       if (!self.auth?.accessToken) return false;
 
       return self.user?.authority === 'ACTIVATED_USER';
     });
 
-    return { getCurrentUser, checkActiveUser };
+    return { setCurrentUser, checkActiveUser };
   });
 
 export type RootStoreType = Instance<typeof RootStore>;

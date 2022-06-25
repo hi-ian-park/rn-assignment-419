@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React from 'react';
+import { useEffect, useState } from 'react';
 
 import { removeToken } from 'service/auth.storage';
 import { useStores } from 'store/useStore';
@@ -11,13 +11,16 @@ const RootStack = createNativeStackNavigator();
 
 function Root() {
   // removeToken();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const {
     user,
     auth: { accessToken },
   } = useStores();
-
-  const isLoggedIn = accessToken && user?.authority === 'ACTIVATED_USER';
   const initialRouteName = isLoggedIn ? '/' : '/auth';
+
+  useEffect(() => {
+    setIsLoggedIn(accessToken && user?.authority === 'ACTIVATED_USER');
+  }, [accessToken, user?.authority]);
 
   return (
     <RootStack.Navigator

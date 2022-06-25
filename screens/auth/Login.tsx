@@ -22,18 +22,18 @@ function Login({ route }) {
 
     if (response.status !== 200) {
       alert(message);
-      return;
-    }
-
-    const isEmailVerified = await store.checkActiveUser();
-
-    if (isEmailVerified) {
-      console.log('홈으로 갈게');
     } else {
-      navigation.navigate('/auth/send-verification', {
-        ...route.params,
-        password,
-      });
+      await store.getCurrentUser();
+      const isEmailVerified = await store.checkActiveUser();
+      console.log('isEmailVerified: ', isEmailVerified);
+      if (isEmailVerified) {
+        console.log('홈으로 갈게');
+      } else {
+        navigation.navigate('/auth/send-verification', {
+          ...route.params,
+          password,
+        });
+      }
     }
   };
 

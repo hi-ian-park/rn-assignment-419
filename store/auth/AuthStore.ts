@@ -1,8 +1,10 @@
-import { flow, getParent, types } from 'mobx-state-tree';
+import { flow, types } from 'mobx-state-tree';
 
 import { authUrl } from 'service/api-config';
 import { getToken, persistToken } from 'service/auth.storage';
 import { DEFAULT_POST_HEADERS } from 'service/default.headers';
+import { userClient } from 'service/user.client';
+
 const EMAIL_RGX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 export const AuthStore = types
@@ -67,6 +69,7 @@ export const AuthStore = types
       if (response.status === 200) {
         yield persistToken(accessToken);
         self.accessToken = accessToken;
+        yield userClient.getCurrent();
       }
 
       return { response, accessToken, message };
