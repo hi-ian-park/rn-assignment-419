@@ -29,7 +29,14 @@ export const RootStore = types
       }
     });
 
-    return { getCurrentUser };
+    const checkActiveUser = flow(function* () {
+      console.log(self.user?.authority);
+      if (!self.auth?.accessToken) return false;
+
+      return self.user?.authority === 'ACTIVATED_USER';
+    });
+
+    return { getCurrentUser, checkActiveUser };
   });
 
 export type RootStoreType = Instance<typeof RootStore>;
