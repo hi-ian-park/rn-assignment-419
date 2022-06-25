@@ -23,7 +23,7 @@ function Login({ route }) {
     if (response.status !== 200) {
       alert(message);
     } else {
-      await store.getCurrentUser();
+      await store.setCurrentUser();
       const isEmailVerified = await store.checkActiveUser();
       console.log('isEmailVerified: ', isEmailVerified);
       if (isEmailVerified) {

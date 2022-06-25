@@ -1,7 +1,5 @@
 import { Instance, types, flow } from 'mobx-state-tree';
 
-import { authUrl } from 'service/api-config';
-import { DEFAULT_HEADERS } from 'service/default.headers';
 import { userClient } from 'service/user.client';
 
 import { User } from './UserStore';
@@ -15,6 +13,7 @@ export const RootStore = types
   .actions((self) => {
     const setCurrentUser = flow(function* () {
       const { response, data } = yield userClient.getCurrent();
+      if (response.status !== 200) return;
       if (response.status === 200) {
         self.user = data;
         console.log('self.user: ', self.user);
