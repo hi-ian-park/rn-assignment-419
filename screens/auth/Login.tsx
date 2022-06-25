@@ -27,7 +27,7 @@ function Login({ route }) {
       const isEmailVerified = await store.checkActiveUser();
       console.log('isEmailVerified: ', isEmailVerified);
       if (isEmailVerified) {
-        console.log('홈으로 갈게');
+        navigation.navigate('/');
       } else {
         navigation.navigate('/auth/send-verification', {
           ...route.params,
