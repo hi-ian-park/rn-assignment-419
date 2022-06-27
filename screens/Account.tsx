@@ -17,7 +17,8 @@ function Account() {
   const handlePressLogInBtn = () => navigation.navigate('/auth');
   const handlePressLogOutBtn = async () => {
     store.logout();
-    navigation.reset({ routes: [{ name: '/auth' }] });
+    alert('logout');
+    navigation.navigate('/home');
   };
 
   if (!isFocused) return null;

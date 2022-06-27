@@ -16,7 +16,9 @@ export const RootStore = types
       const { response, data } = yield userClient.getCurrent(
         self.auth.accessToken
       );
-      if (response.status !== 200) return;
+      if (response.status !== 200) {
+        self.user = undefined;
+      }
       if (response.status === 200) {
         self.user = data;
       }
@@ -27,7 +29,6 @@ export const RootStore = types
 
       return self.user?.authority === 'ACTIVATED_USER';
     });
-
     const logout = () => {
       removeToken();
       self.auth.accessToken = undefined;
