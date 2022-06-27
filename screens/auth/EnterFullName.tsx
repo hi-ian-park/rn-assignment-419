@@ -5,7 +5,6 @@ import styled from 'styled-components/native';
 import Btn from 'components/Btn';
 import InputBase from 'components/Input';
 import Text from 'components/Text';
-import { getToken } from 'service/auth.storage';
 import { useStores } from 'store/useStore';
 import { theme } from 'styles/theme';
 

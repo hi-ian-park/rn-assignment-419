@@ -48,6 +48,7 @@ function MainTabs() {
         name="/account"
         component={Account}
         options={{
+          unmountOnBlur: true,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="account-circle-outline"

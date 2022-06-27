@@ -48,11 +48,11 @@ export const userClient = {
     return { registered, name, provider };
   },
 
-  getCurrent: async () => {
+  getCurrent: async (token: string | undefined) => {
     const url = authUrl.getCurrent;
     const options = {
       headers: {
-        Authorization: `${await getToken()}`,
+        Authorization: token,
         ...DEFAULT_POST_HEADERS,
       },
     };

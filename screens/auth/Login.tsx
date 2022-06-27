@@ -25,7 +25,6 @@ function Login({ route }) {
     } else {
       await store.setCurrentUser();
       const isEmailVerified = await store.checkActiveUser();
-      console.log('isEmailVerified: ', isEmailVerified);
       if (isEmailVerified) {
         navigation.navigate('/');
       } else {
