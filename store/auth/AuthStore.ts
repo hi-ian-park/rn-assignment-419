@@ -69,7 +69,7 @@ export const AuthStore = types
       if (response.status === 200) {
         yield persistToken(accessToken);
         self.accessToken = accessToken;
-        yield userClient.getCurrent();
+        yield userClient.getCurrent(accessToken);
       }
 
       return { response, accessToken, message };
