@@ -26,9 +26,9 @@ export const RootStore = types
 
     const checkActiveUser = flow(function* () {
       if (!self.auth?.accessToken) return false;
-
       return self.user?.authority === 'ACTIVATED_USER';
     });
+
     const logout = () => {
       removeToken();
       self.auth.accessToken = undefined;

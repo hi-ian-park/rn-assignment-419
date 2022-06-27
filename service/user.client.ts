@@ -1,18 +1,24 @@
-/*
- * TODO: 삭제 예정
- * auth 나 user action 쪽에서만 필요한 함수들이라서 action 쪽에서 만들어 사용할 예정
- */
-
 import { authUrl } from './api-config';
 import { DEFAULT_POST_HEADERS } from './default.headers';
 
+export type LoginPayloadType = {
+  email: string;
+  password: string;
+};
+
+export type RegisterPayloadType = {
+  email: string;
+  name: string;
+  password: string;
+};
+
 export const userClient = {
-  login: async (email: string, password: string) => {
+  login: async (payload: LoginPayloadType) => {
     const url = authUrl.login;
     const options = {
       method: 'POST',
       headers: DEFAULT_POST_HEADERS,
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify(payload),
     };
 
     const response = await fetch(url, options);
@@ -20,12 +26,12 @@ export const userClient = {
     return { response, data };
   },
 
-  register: async (email: string, password: string, username: string) => {
+  register: async (payload: RegisterPayloadType) => {
     const url = authUrl.register;
     const options = {
       method: 'POST',
       headers: DEFAULT_POST_HEADERS,
-      body: JSON.stringify({ email, password, username }),
+      body: JSON.stringify({ ...payload, locale: 'en' }),
     };
 
     const response = await fetch(url, options);
