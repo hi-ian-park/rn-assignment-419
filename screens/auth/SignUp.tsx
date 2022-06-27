@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
 
@@ -14,6 +14,7 @@ const RULES = {
   atLeast1Letter: (value) => /[a-zA-Z]+/.test(value),
   atLeast1Number: (value) => /[0-9]+/.test(value),
   atLeast1SpecialCharacter: (value) =>
+    // eslint-disable-next-line no-useless-escape
     /[!"#$%&'()*+,-./:;<=>?@\[\\\]^_`{|}~]+/.test(value),
 };
 

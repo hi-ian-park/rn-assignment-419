@@ -13,7 +13,9 @@ export const RootStore = types
   })
   .actions((self) => {
     const setCurrentUser = flow(function* () {
-      const { response, data } = yield userClient.getCurrent();
+      const { response, data } = yield userClient.getCurrent(
+        self.auth.accessToken
+      );
       if (response.status !== 200) return;
       if (response.status === 200) {
         self.user = data;

@@ -1,6 +1,5 @@
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import React from 'react';
 
 import Account from 'screens/Account';
 import Home from 'screens/Home';

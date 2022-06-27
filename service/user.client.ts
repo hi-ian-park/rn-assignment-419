@@ -4,7 +4,6 @@
  */
 
 import { authUrl } from './api-config';
-import { getToken } from './auth.storage';
 import { DEFAULT_POST_HEADERS } from './default.headers';
 
 export const userClient = {
@@ -48,7 +47,7 @@ export const userClient = {
     return { registered, name, provider };
   },
 
-  getCurrent: async (token: string | undefined) => {
+  getCurrent: async (token: string) => {
     const url = authUrl.getCurrent;
     const options = {
       headers: {

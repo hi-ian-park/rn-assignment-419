@@ -1,4 +1,3 @@
-import React from 'react';
 import { TextStyle } from 'react-native';
 import { TypographyScale } from 'styled-components';
 import styled from 'styled-components/native';

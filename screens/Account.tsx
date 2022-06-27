@@ -4,7 +4,6 @@ import styled from 'styled-components/native';
 
 import Btn from 'components/Btn';
 import Text from 'components/Text';
-import { removeToken } from 'service/auth.storage';
 import { useStores } from 'store/useStore';
 import { flexBox } from 'styles/utils';
 

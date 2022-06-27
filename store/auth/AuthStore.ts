@@ -5,6 +5,7 @@ import { getToken, persistToken } from 'service/auth.storage';
 import { DEFAULT_POST_HEADERS } from 'service/default.headers';
 import { userClient } from 'service/user.client';
 
+// eslint-disable-next-line no-useless-escape
 const EMAIL_RGX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 export const AuthStore = types

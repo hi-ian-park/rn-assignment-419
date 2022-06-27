@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
 

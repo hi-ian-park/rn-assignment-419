@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { TextInputProps, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 
