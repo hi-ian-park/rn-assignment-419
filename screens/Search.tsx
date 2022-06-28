@@ -1,9 +1,13 @@
 import styled from 'styled-components/native';
 
+import Text from 'components/Text';
+
 function Search() {
   return (
     <Styled.Container>
-      <Styled.Text>Search</Styled.Text>
+      <Text size="xl" fontWeight="bold">
+        SEARCH
+      </Text>
     </Styled.Container>
   );
 }

@@ -1,9 +1,13 @@
 import styled from 'styled-components/native';
 
+import Text from 'components/Text';
+
 function Home() {
   return (
     <Styled.Container>
-      <Styled.Text>HOME</Styled.Text>
+      <Text size="xl" fontWeight="bold">
+        HOME
+      </Text>
     </Styled.Container>
   );
 }

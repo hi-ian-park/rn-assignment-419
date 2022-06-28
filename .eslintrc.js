@@ -4,6 +4,7 @@ module.exports = {
     'universe/native',
     'universe/shared/typescript-analysis',
     'plugin:react/jsx-runtime',
+    'plugin:react-hooks/recommended',
   ],
   overrides: [
     {
