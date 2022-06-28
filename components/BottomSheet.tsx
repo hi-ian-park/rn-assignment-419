@@ -30,7 +30,7 @@ const BottomSheet = (props: BottomSheetProps) => {
 
 export default BottomSheet;
 
-const BOTTOM_SHEET_HEIGHT = SCREEN_HEIGHT / 2.75;
+const BOTTOM_SHEET_HEIGHT = `${Math.round(SCREEN_HEIGHT / 2.75)}px`;
 
 const Styled = {
   Container: styled.View`
