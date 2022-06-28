@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
 
@@ -23,7 +23,7 @@ const SignUp = (props: SignUpProps) => {
   const navigation = useNavigation();
   const { route } = props;
   const onChangeText = (text: string) => setPassword(text);
-  const handlePressNextBtn = () => {
+  const handlePressNextBtn = useCallback(() => {
     const usable =
       RULES.length(password) &&
       RULES.atLeast1Letter(password) &&
@@ -35,7 +35,7 @@ const SignUp = (props: SignUpProps) => {
       return;
     }
     navigation.navigate('/auth/enter-full-name', { ...route.params, password });
-  };
+  }, [navigation, password, route.params]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

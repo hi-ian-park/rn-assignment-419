@@ -1,4 +1,5 @@
 import { useNavigation, useIsFocused } from '@react-navigation/native';
+import { useCallback } from 'react';
 import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
 
@@ -14,12 +15,15 @@ function Account() {
   const hasToken = !!store.auth?.accessToken;
   console.log('hasToken: ', hasToken);
 
-  const handlePressLogInBtn = () => navigation.navigate('/auth');
-  const handlePressLogOutBtn = async () => {
+  const handlePressLogInBtn = useCallback(() => {
+    navigation.navigate('/auth');
+  }, [navigation]);
+
+  const handlePressLogOutBtn = useCallback(async () => {
     store.logout();
     alert('logout');
     navigation.navigate('/home');
-  };
+  }, [navigation, store]);
 
   if (!isFocused) return null;
   return (

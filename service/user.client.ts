@@ -35,7 +35,8 @@ export const userClient = {
     };
 
     const response = await fetch(url, options);
-    return response;
+    const data = await response.json();
+    return { response, data };
   },
 
   checkRegistration: async (email: string) => {

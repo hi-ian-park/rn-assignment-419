@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { useRef } from 'react';
+import { useRef, useCallback } from 'react';
 import styled from 'styled-components/native';
 
 import Btn from 'components/Btn';
@@ -15,10 +15,11 @@ const EnterFullName = (props: EnterFullNameProps) => {
   const { route } = props;
   const navigation = useNavigation();
   const nameInputRef = useRef('');
-  const onChangeText = (text) => {
+  const onChangeText = useCallback((text: string) => {
     nameInputRef.current = text;
-  };
-  const handlePressSignUpBtn = async () => {
+  }, []);
+
+  const handlePressSignUpBtn = useCallback(async () => {
     await store.auth.signup({
       ...route.params,
       name: nameInputRef.current,
@@ -27,7 +28,8 @@ const EnterFullName = (props: EnterFullNameProps) => {
       accessToken: store.auth?.accessToken,
       email: route.params.email,
     });
-  };
+  }, [navigation, route.params, store.auth]);
+
   return (
     <Styled.Container>
       <Text size="lg" fontWeight="bold">

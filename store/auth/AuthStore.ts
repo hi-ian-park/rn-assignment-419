@@ -1,6 +1,6 @@
 import { flow, types } from 'mobx-state-tree';
 
-import { getToken, persistToken } from 'service/auth.storage';
+import { getToken, persistToken, removeToken } from 'service/auth.storage';
 import {
   LoginPayloadType,
   RegisterPayloadType,
@@ -29,7 +29,8 @@ export const AuthStore = types
         return;
       }
       try {
-        const { registered, name, provider } = yield checkRegistration(email);
+        const { registered, name, provider } =
+          yield userClient.checkRegistration(email);
         if (registered) return { redirectTo: '/auth/login', name };
         else return { redirectTo: '/auth/signup' };
       } catch (err) {
@@ -38,9 +39,9 @@ export const AuthStore = types
     });
 
     const signup = flow(function* (payload: RegisterPayloadType) {
-      const { accessToken } = yield userClient.register(payload);
-      yield persistToken(accessToken);
-      self.accessToken = accessToken;
+      const { data } = yield userClient.register(payload);
+      yield persistToken(data.accessToken);
+      self.accessToken = data.accessToken;
     });
 
     const login = flow(function* (payload: LoginPayloadType) {

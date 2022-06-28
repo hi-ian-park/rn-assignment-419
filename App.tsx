@@ -57,7 +57,7 @@ export default function App() {
       }
       setIsStoreReady(true);
     })();
-  }, [store.auth.accessToken]);
+  }, [store]);
 
   if (!isAppReady) return <AppLoading />;
 

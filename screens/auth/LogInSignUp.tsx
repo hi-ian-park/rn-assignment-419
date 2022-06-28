@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { useRef } from 'react';
+import { useRef, useCallback } from 'react';
 import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
 
@@ -12,8 +12,9 @@ function LogInSignUp() {
   const store = useStores().auth;
   const navigation = useNavigation();
   const emailInputRef = useRef('');
+
   const onChangeText = (text: string) => (emailInputRef.current = text);
-  const handlePressNextBtn = async () => {
+  const handlePressNextBtn = useCallback(async () => {
     const { redirectTo, name } = await store.checkRegistration(
       emailInputRef.current
     );
@@ -21,7 +22,7 @@ function LogInSignUp() {
       name,
       email: emailInputRef.current,
     });
-  };
+  }, [navigation, store]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
