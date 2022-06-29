@@ -31,8 +31,6 @@ if (__DEV__) {
 }
 
 export default function App() {
-  const store = useStores();
-  const [isStoreReady, setIsStoreReady] = useState(false);
   const [isNotoSansFontsLoaded] = useNotoSansKrFonts({
     NotoSansKR_700Bold,
     NotoSansKR_500Medium,
@@ -44,20 +42,7 @@ export default function App() {
     Poppins_600SemiBold,
   });
 
-  const isResourceReady = isNotoSansFontsLoaded && isPoppinsFontsLoaded;
-  const isAppReady = isStoreReady && isResourceReady;
-
-  useEffect(() => {
-    (async () => {
-      await store.auth.setToken();
-      if (store.auth?.accessToken) {
-        await store.setCurrentUser();
-      } else {
-        console.log('user 없음');
-      }
-      setIsStoreReady(true);
-    })();
-  }, [store]);
+  const isAppReady = isNotoSansFontsLoaded && isPoppinsFontsLoaded;
 
   if (!isAppReady) return <AppLoading />;
 
