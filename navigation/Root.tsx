@@ -10,16 +10,10 @@ import MainTabs from './MainTabs';
 const RootStack = createNativeStackNavigator();
 
 const Root = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const {
-    user,
-    auth,
-    auth: { accessToken },
+    auth: { isLoggedIn },
   } = useStores();
   const initialRouteName = isLoggedIn ? '/' : '/auth';
-  useEffect(() => {
-    setIsLoggedIn(accessToken && user?.authority === 'ACTIVATED_USER');
-  }, [auth, user]);
 
   return (
     <RootStack.Navigator

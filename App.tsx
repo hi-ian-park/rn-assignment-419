@@ -13,12 +13,13 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { connectToDevTools } from 'react-devtools-core';
 import { ThemeProvider } from 'styled-components';
 
+import utils from 'lib/utils';
+import { getToken } from 'service/auth.storage';
 import StoreProvider from 'store/StoreProvider';
-import { useStores } from 'store/useStore';
 
 import Root from './navigation/Root';
 import { theme } from './styles/theme';
@@ -31,8 +32,7 @@ if (__DEV__) {
 }
 
 export default function App() {
-  const store = useStores();
-  const [isStoreReady, setIsStoreReady] = useState(false);
+  const [lazyLoaded, setLazyLoaded] = useState(false);
   const [isNotoSansFontsLoaded] = useNotoSansKrFonts({
     NotoSansKR_700Bold,
     NotoSansKR_500Medium,
@@ -44,29 +44,24 @@ export default function App() {
     Poppins_600SemiBold,
   });
 
-  const isResourceReady = isNotoSansFontsLoaded && isPoppinsFontsLoaded;
-  const isAppReady = isStoreReady && isResourceReady;
+  const isAppReady = isNotoSansFontsLoaded && isPoppinsFontsLoaded;
 
   useEffect(() => {
     (async () => {
-      await store.auth.setToken();
-      if (store.auth?.accessToken) {
-        await store.setCurrentUser();
-      } else {
-        console.log('user 없음');
-      }
-      setIsStoreReady(true);
+      await getToken();
+      await utils.sleep(100);
+      setLazyLoaded(true);
     })();
-  }, [store]);
+  }, []);
 
-  if (!isAppReady) return <AppLoading />;
+  if (!isAppReady) return <AppLoading autoHideSplash />;
 
   return (
     <ThemeProvider theme={theme}>
       <StoreProvider>
         <NavigationContainer>
           <StatusBar />
-          <Root />
+          {lazyLoaded ? <Root /> : <AppLoading />}
         </NavigationContainer>
       </StoreProvider>
     </ThemeProvider>

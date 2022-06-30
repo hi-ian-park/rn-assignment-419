@@ -26,7 +26,9 @@ function Login({ route }) {
       await store.setCurrentUser();
       const isEmailVerified = await store.checkActiveUser();
       if (isEmailVerified) {
-        navigation.navigate('/');
+        navigation.navigate('/', {
+          screen: '/home',
+        });
       } else {
         navigation.navigate('/auth/send-verification', {
           ...route.params,

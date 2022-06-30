@@ -1,6 +1,7 @@
+import jwtDecode from 'jwt-decode';
 import { flow, types } from 'mobx-state-tree';
 
-import { getToken, persistToken, removeToken } from 'service/auth.storage';
+import { getToken, persistToken } from 'service/auth.storage';
 import {
   LoginPayloadType,
   RegisterPayloadType,
@@ -10,15 +11,35 @@ import {
 // eslint-disable-next-line no-useless-escape
 const EMAIL_RGX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
+const Payload = types.model('Payload', {
+  sub: types.optional(types.string, ''),
+  authority: types.maybe(types.string),
+  firstLogin: types.maybe(types.boolean),
+  provider: types.maybe(types.string),
+  exp: types.optional(types.number, 0),
+});
+
 export const AuthStore = types
   .model('AuthStore', {
     accessToken: types.maybe(types.string),
+    payload: types.optional(Payload, {}),
+  })
+  .views((self) => {
+    return {
+      get isLoggedIn() {
+        return (
+          !!self.accessToken && self.payload?.authority === 'ACTIVATED_USER'
+        );
+      },
+    };
   })
   .actions((self) => {
     const setToken = flow(function* () {
       const storageToken = yield getToken();
       if (storageToken) {
         self.accessToken = storageToken;
+        const tokenWithoutFormat = self.accessToken.split(' ')[1];
+        self.payload = jwtDecode(tokenWithoutFormat);
       }
     });
 
