@@ -13,9 +13,11 @@ const EMAIL_RGX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const Payload = types.model('Payload', {
   sub: types.optional(types.string, ''),
-  authority: types.maybe(types.string),
+  authority: types.maybe(
+    types.enumeration('Authority', ['ACTIVATED_USER', 'TEMPORARY_USER'])
+  ),
   firstLogin: types.maybe(types.boolean),
-  provider: types.maybe(types.string),
+  provider: types.maybe(types.enumeration('Provider', ['LOCAL'])),
   exp: types.optional(types.number, 0),
 });
 
