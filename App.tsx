@@ -13,12 +13,13 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { connectToDevTools } from 'react-devtools-core';
 import { ThemeProvider } from 'styled-components';
 
+import utils from 'lib/utils';
+import { getToken } from 'service/auth.storage';
 import StoreProvider from 'store/StoreProvider';
-import { useStores } from 'store/useStore';
 
 import Root from './navigation/Root';
 import { theme } from './styles/theme';
@@ -31,6 +32,7 @@ if (__DEV__) {
 }
 
 export default function App() {
+  const [lazyLoaded, setLazyLoaded] = useState(false);
   const [isNotoSansFontsLoaded] = useNotoSansKrFonts({
     NotoSansKR_700Bold,
     NotoSansKR_500Medium,
@@ -44,14 +46,22 @@ export default function App() {
 
   const isAppReady = isNotoSansFontsLoaded && isPoppinsFontsLoaded;
 
-  if (!isAppReady) return <AppLoading />;
+  useEffect(() => {
+    (async () => {
+      await getToken();
+      await utils.sleep(100);
+      setLazyLoaded(true);
+    })();
+  }, []);
+
+  if (!isAppReady) return <AppLoading autoHideSplash />;
 
   return (
     <ThemeProvider theme={theme}>
       <StoreProvider>
         <NavigationContainer>
           <StatusBar />
-          <Root />
+          {lazyLoaded ? <Root /> : <AppLoading />}
         </NavigationContainer>
       </StoreProvider>
     </ThemeProvider>

@@ -4,8 +4,7 @@ import styled from 'styled-components/native';
 
 import Text from 'components/Text';
 import { theme } from 'styles/theme';
-
-import { flexBox } from '../../styles/utils';
+import { flexBox } from 'styles/utils';
 
 type ButtonVariant = 'primary' | 'secondary' | 'outlined' | 'ghost';
 type ButtonSize = '100%';

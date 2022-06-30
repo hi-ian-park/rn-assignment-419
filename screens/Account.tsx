@@ -30,7 +30,7 @@ function Account() {
     <SafeAreaView style={{ flex: 1 }}>
       <Styled.Container>
         <Text size="xl" fontWeight="bold" style={{ marginBottom: 60 }}>
-          {store.user?.name ?? 'Log in or Sign up'}
+          {store.user?.name || 'Log in or Sign up'}
         </Text>
         <Btn
           size="100%"

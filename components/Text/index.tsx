@@ -21,6 +21,7 @@ const Text = (props: TextProps) => {
     fontWeight,
     textDecoration = 'none',
     style,
+    ...others
   } = props;
 
   // TODO: 이거먼저 밑줄, 취소선 style을 기본컴포넌트에서 만드는 방법 찾기
@@ -31,6 +32,7 @@ const Text = (props: TextProps) => {
       fontWeight={fontWeight}
       textDecoration={textDecoration}
       style={style}
+      {...others}
     >
       {children}
     </Styled.Text>
