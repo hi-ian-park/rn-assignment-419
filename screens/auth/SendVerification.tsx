@@ -1,7 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import styled from 'styled-components/native';
 
-import Btn from 'components/Btn';
+import Button from 'components/Button';
 import Text from 'components/Text';
 import { useStores } from 'store/useStore';
 import { theme } from 'styles/theme';
@@ -45,12 +45,12 @@ const SendVerification = (props: SendVerificationProps) => {
       </Styled.InfoWrapper>
 
       <Styled.ButtonWrapper>
-        <Btn variant="primary" size="100%">
+        <Button variant="primary" size="100%">
           Open email
-        </Btn>
-        <Btn variant="ghost" size="100%" onPress={handlePressResendBtn}>
+        </Button>
+        <Button variant="ghost" size="100%" onPress={handlePressResendBtn}>
           <Text color={theme.colors.primary}>Resend email</Text>
-        </Btn>
+        </Button>
       </Styled.ButtonWrapper>
     </Styled.Container>
   );

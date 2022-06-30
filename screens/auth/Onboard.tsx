@@ -4,8 +4,8 @@ import { ImageBackground } from 'react-native';
 import styled from 'styled-components/native';
 
 import BottomSheet from 'components/BottomSheet';
-import Btn from 'components/Btn';
-import SocialLoginButton from 'components/Btn/SocialLoginButton';
+import Button from 'components/Button';
+import SocialLoginButton from 'components/Button/SocialLoginButton';
 import { flexBox } from 'styles/utils';
 
 function Onboard() {
@@ -31,22 +31,22 @@ function Onboard() {
   return (
     <Styled.Container source={require('../../assets/images/onboarding-ko.jpg')}>
       <Styled.BottomSheet>
-        <Btn
+        <Button
           style={{ marginBottom: 10 }}
           onPress={handlePressStartBtn}
           size="100%"
           variant="primary"
         >
           Get Started
-        </Btn>
-        <Btn
+        </Button>
+        <Button
           onPress={handlePressContinueAsGuestBtn}
           size="100%"
           variant="ghost"
           fontSize="sm"
         >
           Continue as guest
-        </Btn>
+        </Button>
       </Styled.BottomSheet>
       <BottomSheet visible={isBottomSheetOpen} onClose={onCloseBottomSheet}>
         <Styled.SocialLoginButton
@@ -82,14 +82,14 @@ function Onboard() {
         >
           Continue with Facebook
         </Styled.SocialLoginButton>
-        <Btn
+        <Button
           onPress={handlePressContinueWithEmailBtn}
           size="100%"
           variant="ghost"
           fontSize="sm"
         >
           Continue with Email
-        </Btn>
+        </Button>
       </BottomSheet>
     </Styled.Container>
   );

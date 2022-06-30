@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
 
-import Btn from 'components/Btn';
+import Button from 'components/Button';
 import PasswordInput from 'components/Input/Password';
 import Text from 'components/Text';
 import { useStores } from 'store/useStore';
@@ -54,16 +54,16 @@ function Login({ route }) {
           placeholderTextColor="#7b7b7b"
           textContentType="password"
         />
-        <Btn size="100%" variant="primary" onPress={handlePressLoginBtn}>
+        <Button size="100%" variant="primary" onPress={handlePressLoginBtn}>
           <Text fontWeight="bold" color={theme.colors.white}>
             Login
           </Text>
-        </Btn>
-        <Btn size="100%" variant="ghost">
+        </Button>
+        <Button size="100%" variant="ghost">
           <Text fontWeight="semiBold" color={theme.colors.primary}>
             Forgot password?
           </Text>
-        </Btn>
+        </Button>
       </Styled.Container>
     </SafeAreaView>
   );

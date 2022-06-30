@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
 
-import Btn from 'components/Btn';
+import Button from 'components/Button';
 import Text from 'components/Text';
 import { useStores } from 'store/useStore';
 import { flexBox } from 'styles/utils';
@@ -32,13 +32,13 @@ function Account() {
         <Text size="xl" fontWeight="bold" style={{ marginBottom: 60 }}>
           {store.user?.name || 'Log in or Sign up'}
         </Text>
-        <Btn
+        <Button
           size="100%"
           variant="primary"
           onPress={hasToken ? handlePressLogOutBtn : handlePressLogInBtn}
         >
           {hasToken ? 'Log out' : 'Log in'}
-        </Btn>
+        </Button>
       </Styled.Container>
     </SafeAreaView>
   );

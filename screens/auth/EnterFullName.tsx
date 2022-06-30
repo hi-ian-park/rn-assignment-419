@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useRef, useCallback } from 'react';
 import styled from 'styled-components/native';
 
-import Btn from 'components/Btn';
+import Button from 'components/Button';
 import InputBase from 'components/Input';
 import Text from 'components/Text';
 import { useStores } from 'store/useStore';
@@ -46,9 +46,9 @@ const EnterFullName = (props: EnterFullNameProps) => {
           Let your family and friends know who you are!
         </Text>
       </Styled.HintWrapper>
-      <Btn variant="primary" size="100%" onPress={handlePressSignUpBtn}>
+      <Button variant="primary" size="100%" onPress={handlePressSignUpBtn}>
         Sign up
-      </Btn>
+      </Button>
     </Styled.Container>
   );
 };

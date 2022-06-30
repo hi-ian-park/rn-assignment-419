@@ -2,7 +2,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { View } from 'react-native';
 import styled from 'styled-components/native';
 
-import Btn, { ButtonProps } from 'components/Btn';
+import Button, { ButtonProps } from 'components/Button';
 import Text from 'components/Text';
 import { flexBox } from 'styles/utils';
 
@@ -30,14 +30,14 @@ const iconColorMap = {
 const SocialLoginButton = (props: SocialLoginButtonProps) => {
   const { iconName, iconColor, children } = props;
   return (
-    <Styled.Btn {...props} iconStyle={iconName}>
+    <Styled.Button {...props} iconStyle={iconName}>
       <Styled.IconPlaceholder>
         <Styled.Icon name={iconName} size={24} color={iconColor} />
         <View style={{ width: '100%', alignItems: 'center' }}>
           <Text color={iconColorMap[iconName].text}>{children}</Text>
         </View>
       </Styled.IconPlaceholder>
-    </Styled.Btn>
+    </Styled.Button>
   );
 };
 
@@ -49,7 +49,7 @@ type StyledSocialLoginButtonProps = {
 };
 
 const Styled = {
-  Btn: styled(Btn)<StyledSocialLoginButtonProps>`
+  Button: styled(Button)<StyledSocialLoginButtonProps>`
     background-color: ${({ iconStyle }) => iconColorMap[iconStyle].background};
   `,
 

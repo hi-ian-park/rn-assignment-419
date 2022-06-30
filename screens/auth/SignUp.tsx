@@ -3,7 +3,7 @@ import { useState, useCallback } from 'react';
 import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
 
-import Btn from 'components/Btn';
+import Button from 'components/Button';
 import PasswordInput from 'components/Input/Password';
 import Text from 'components/Text';
 
@@ -55,9 +55,9 @@ const SignUp = (props: SignUpProps) => {
           validation={RULES}
           isHint
         />
-        <Btn size="100%" variant="primary" onPress={handlePressNextBtn}>
+        <Button size="100%" variant="primary" onPress={handlePressNextBtn}>
           Next
-        </Btn>
+        </Button>
       </Styled.Container>
     </SafeAreaView>
   );

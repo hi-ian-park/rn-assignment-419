@@ -3,7 +3,7 @@ import { useRef, useCallback } from 'react';
 import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
 
-import Btn from 'components/Btn';
+import Button from 'components/Button';
 import InputBase from 'components/Input';
 import Text from 'components/Text';
 import { useStores } from 'store/useStore';
@@ -39,9 +39,9 @@ function LogInSignUp() {
             placeholderTextColor="#7b7b7b"
           />
         </Styled.InputWrapper>
-        <Btn onPress={handlePressNextBtn} size="100%" variant="primary">
+        <Button onPress={handlePressNextBtn} size="100%" variant="primary">
           Next
-        </Btn>
+        </Button>
       </Styled.Container>
     </SafeAreaView>
   );
