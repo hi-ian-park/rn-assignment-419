@@ -5,7 +5,13 @@ import Account from 'screens/Account';
 import Home from 'screens/Home';
 import Search from 'screens/Search';
 
-const Tab = createBottomTabNavigator();
+export type MainTabParamList = {
+  '/home': undefined;
+  '/search': undefined;
+  '/account': undefined;
+};
+
+const Tab = createBottomTabNavigator<MainTabParamList>();
 
 function MainTabs() {
   return (
