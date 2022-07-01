@@ -7,15 +7,7 @@ import Login from 'screens/auth/Login';
 import Onboard from 'screens/auth/Onboard';
 import SendVerification from 'screens/auth/SendVerification';
 import SignUp from 'screens/auth/SignUp';
-
-export type AuthStackParamList = {
-  '/auth/onboard': undefined;
-  '/auth/login-signup': undefined;
-  '/auth/signup': undefined;
-  '/auth/login': undefined;
-  '/auth/enter-full-name': undefined;
-  '/auth/send-verification': undefined;
-};
+import { AuthStackParamList } from 'types/NavigationTypes';
 
 const NativeStack = createNativeStackNavigator<AuthStackParamList>();
 

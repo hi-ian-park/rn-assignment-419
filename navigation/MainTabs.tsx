@@ -4,12 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Account from 'screens/Account';
 import Home from 'screens/Home';
 import Search from 'screens/Search';
-
-export type MainTabParamList = {
-  '/home': undefined;
-  '/search': undefined;
-  '/account': undefined;
-};
+import { MainTabParamList } from 'types/NavigationTypes';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 

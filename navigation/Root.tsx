@@ -1,19 +1,11 @@
-import { NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { observer } from 'mobx-react-lite';
-import { useEffect, useState } from 'react';
 
 import { useStores } from 'store/useStore';
+import { RootStackParamList } from 'types/NavigationTypes';
 
-import AuthStacks, { AuthStackParamList } from './AuthStacks';
-import MainTabs, { MainTabParamList } from './MainTabs';
-
-export type RootStackParamList = {
-  '/': undefined;
-  '/auth': undefined;
-  MainTabNavigator: NavigatorScreenParams<MainTabParamList>;
-  AuthStackNavigator: NavigatorScreenParams<AuthStackParamList>;
-};
+import AuthStacks from './AuthStacks';
+import MainTabs from './MainTabs';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
