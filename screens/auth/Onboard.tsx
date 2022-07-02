@@ -7,29 +7,41 @@ import BottomSheet from 'components/BottomSheet';
 import Button from 'components/Button';
 import SocialLoginButton from 'components/Button/SocialLoginButton';
 import { flexBox } from 'styles/utils';
+import { OnboardScreenNavigationProp } from 'types/NavigationTypes';
 
-function Onboard() {
+const Onboard = () => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const navigation = useNavigation();
+  const navigation = useNavigation<OnboardScreenNavigationProp>();
 
   // Event Handler
   const handlePressStartBtn = useCallback(() => {
     setIsBottomSheetOpen(true);
   }, []);
-  // TODO: onCloseBottomSheet vs handleCloseBottomSheet ??
+
   const onCloseBottomSheet = useCallback(() => {
     setIsBottomSheetOpen(false);
   }, []);
+
   const handlePressContinueAsGuestBtn = useCallback(() => {
+    setIsBottomSheetOpen(false);
     navigation.reset({ routes: [{ name: '/' }] });
-  }, []);
+  }, [navigation]);
+
   const handlePressContinueWithEmailBtn = useCallback(() => {
     onCloseBottomSheet();
-    navigation.navigate('/auth', { screen: '/auth/login-signup' });
-  }, []);
+    navigation.navigate('/auth/login-signup');
+  }, [navigation, onCloseBottomSheet]);
 
   return (
-    <Styled.Container source={require('../../assets/images/onboarding-ko.jpg')}>
+    <ImageBackground
+      source={require('assets/images/onboarding-ko.jpg')}
+      style={{
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+      }}
+    >
       <Styled.BottomSheet>
         <Button
           style={{ marginBottom: 10 }}
@@ -91,16 +103,11 @@ function Onboard() {
           Continue with Email
         </Button>
       </BottomSheet>
-    </Styled.Container>
+    </ImageBackground>
   );
-}
+};
 
 const Styled = {
-  Container: styled(ImageBackground)`
-    flex: 1;
-    ${flexBox('row', 'end', 'center')};
-  `,
-
   BottomSheet: styled.View`
     ${flexBox('column', 'center', 'center')};
     width: 100%;

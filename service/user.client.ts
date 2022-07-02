@@ -39,7 +39,7 @@ export const userClient = {
     return { response, data };
   },
 
-  checkRegistration: async (email: string) => {
+  checkRegistration: async (email: string): Promise<CheckRegistrationType> => {
     const url = authUrl.checkRegistration;
     const options = {
       method: 'POST',
@@ -67,4 +67,10 @@ export const userClient = {
     const data = await response.json();
     return { response, data };
   },
+};
+
+export type CheckRegistrationType = {
+  registered: boolean;
+  name?: string;
+  provider?: string;
 };

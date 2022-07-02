@@ -20,8 +20,7 @@ const RULES = {
 
 const SignUp = (props: SignUpProps) => {
   const [password, setPassword] = useState('');
-  const navigation = useNavigation();
-  const { route } = props;
+  const { navigation, route } = props;
   const onChangeText = (text: string) => setPassword(text);
   const handlePressNextBtn = useCallback(() => {
     const usable =

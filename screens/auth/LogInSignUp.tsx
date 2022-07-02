@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native';
 import { useRef, useCallback } from 'react';
 import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
@@ -7,10 +6,15 @@ import Button from 'components/Button';
 import InputBase from 'components/Input';
 import Text from 'components/Text';
 import { useStores } from 'store/useStore';
+import { LoginSignupScreenNavigationProp } from 'types/NavigationTypes';
 
-function LogInSignUp() {
+type LoginSignUpProp = {
+  navigation: LoginSignupScreenNavigationProp;
+};
+
+const LogInSignUp = (props: LoginSignUpProp) => {
+  const { navigation } = props;
   const store = useStores().auth;
-  const navigation = useNavigation();
   const emailInputRef = useRef('');
 
   const onChangeText = (text: string) => (emailInputRef.current = text);
@@ -45,7 +49,7 @@ function LogInSignUp() {
       </Styled.Container>
     </SafeAreaView>
   );
-}
+};
 
 const Styled = {
   Container: styled.View`
@@ -53,11 +57,6 @@ const Styled = {
     padding: 32px 16px 0 16px;
   `,
 
-  H1: styled(Text)`
-    margin-bottom: 24px;
-  `,
-
-  // 디자인 상에서는 with Label Text Fields 이지만, 실제로 Label이 없기 때문에 margin으로 스타일링
   InputWrapper: styled.View`
     padding: 0 8px;
     margin-top: 30px;

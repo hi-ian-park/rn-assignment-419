@@ -1,8 +1,10 @@
 import jwtDecode from 'jwt-decode';
-import { flow, types } from 'mobx-state-tree';
+import { flow, toGenerator, types } from 'mobx-state-tree';
 
+import U from 'lib/utils';
 import { getToken, persistToken } from 'service/auth.storage';
 import {
+  CheckRegistrationType,
   LoginPayloadType,
   RegisterPayloadType,
   userClient,
@@ -45,19 +47,21 @@ export const AuthStore = types
       }
     });
 
-    const checkRegistration = flow(function* (email: string) {
-      const invalidEmail = !email.match(EMAIL_RGX);
-      if (invalidEmail) {
-        alert('지원하는 이메일 형식이 아닙니다');
-        return;
+    const checkRegistration = flow(function* (
+      email: string
+    ): CheckRegistrationActionType {
+      if (!EMAIL_RGX.test(email)) {
+        return Promise.reject(new Error('Invalid email'));
       }
       try {
-        const { registered, name, provider } =
-          yield userClient.checkRegistration(email);
+        const { registered, name, provider } = yield* toGenerator(
+          userClient.checkRegistration(email)
+        );
         if (registered) return { redirectTo: '/auth/login', name };
         else return { redirectTo: '/auth/signup' };
       } catch (err) {
-        throw err;
+        const message = U.getErrorMessage(err);
+        U.reportError({ message });
       }
     });
 
@@ -82,3 +86,17 @@ export const AuthStore = types
 
     return { setToken, checkRegistration, login, signup };
   });
+
+type CheckRegistrationActionType = Generator<
+  Promise<CheckRegistrationType>,
+  | Promise<never>
+  | {
+      redirectTo: '/auth/login' | '/auth/signup';
+      name: string;
+    }
+  | {
+      redirectTo: '/auth/login' | '/auth/signup';
+      name?: undefined;
+    },
+  CheckRegistrationType
+>;
