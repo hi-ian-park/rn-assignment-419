@@ -17,8 +17,8 @@ export type MainTabParamList = {
 };
 
 export type RootStackParamList = {
-  '/': { screen: keyof MainTabParamList } | undefined;
-  '/auth': { screen: keyof AuthStackParamList } | undefined;
+  '/': { screen?: keyof MainTabParamList } | undefined;
+  '/auth': { screen?: keyof AuthStackParamList } | undefined;
 };
 
 export type OnboardScreenNavigationProp = CompositeNavigationProp<
