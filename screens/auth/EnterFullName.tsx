@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useRef, useCallback } from 'react';
 import styled from 'styled-components/native';
 
@@ -7,13 +7,16 @@ import InputBase from 'components/Input';
 import Text from 'components/Text';
 import { useStores } from 'store/useStore';
 import { theme } from 'styles/theme';
+import { AuthStackParamList } from 'types/NavigationTypes';
 
-interface EnterFullNameProps {}
+interface EnterFullNameProps {
+  navigation: NativeStackScreenProps<AuthStackParamList>['navigation'];
+  route: { params: { email: string; password: string; name: string } };
+}
 
 const EnterFullName = (props: EnterFullNameProps) => {
   const store = useStores();
-  const { route } = props;
-  const navigation = useNavigation();
+  const { navigation, route } = props;
   const nameInputRef = useRef('');
   const onChangeText = useCallback((text: string) => {
     nameInputRef.current = text;

@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
@@ -9,9 +8,18 @@ import Text from 'components/Text';
 import { useStores } from 'store/useStore';
 import { theme } from 'styles/theme';
 
-function Login({ route }) {
+interface SignUpProps {
+  navigation: any;
+  route: {
+    params: {
+      email: string;
+      name: string;
+    };
+  };
+}
+
+function Login({ navigation, route }: SignUpProps) {
   const store = useStores();
-  const navigation = useNavigation();
   const [password, setPassword] = useState('');
   const onChangeText = (text) => setPassword(text);
   const handlePressLoginBtn = async () => {

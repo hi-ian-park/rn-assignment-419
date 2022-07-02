@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native';
 import { useState, useCallback } from 'react';
 import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
@@ -6,8 +5,17 @@ import styled from 'styled-components/native';
 import Button from 'components/Button';
 import PasswordInput from 'components/Input/Password';
 import Text from 'components/Text';
+import { SignUpScreenProps } from 'types/NavigationTypes';
 
-interface SignUpProps {}
+interface SignUpProps {
+  navigation: SignUpScreenProps;
+  route: {
+    params: {
+      email: string;
+      name: string;
+    };
+  };
+}
 
 const RULES = {
   length: (value) => value.length >= 6 && value.length <= 20,

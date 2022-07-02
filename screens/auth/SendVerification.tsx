@@ -7,7 +7,14 @@ import { useStores } from 'store/useStore';
 import { theme } from 'styles/theme';
 import { flexBox } from 'styles/utils';
 
-interface SendVerificationProps {}
+interface SendVerificationProps {
+  route: {
+    params: {
+      email: string;
+      name: string;
+    };
+  };
+}
 
 // XXX: email 인증을 완료 했을 때 어떻게 이 페이지에서 home으로 redirect 시키지?
 //    :: 딥링크 / 다이나믹링크!

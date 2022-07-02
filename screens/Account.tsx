@@ -1,4 +1,5 @@
 import { useNavigation, useIsFocused } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useCallback } from 'react';
 import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
@@ -7,10 +8,14 @@ import Button from 'components/Button';
 import Text from 'components/Text';
 import { useStores } from 'store/useStore';
 import { flexBox } from 'styles/utils';
+import { AccountScreenProps } from 'types/NavigationTypes';
 
-function Account() {
+interface AccountProps {
+  navigation: AccountScreenProps;
+}
+
+const Account = ({ navigation }: AccountProps) => {
   const store = useStores();
-  const navigation = useNavigation();
   const isFocused = useIsFocused();
   const hasToken = !!store.auth?.accessToken;
   console.log('hasToken: ', hasToken);
@@ -22,7 +27,7 @@ function Account() {
   const handlePressLogOutBtn = useCallback(async () => {
     store.logout();
     alert('logout');
-    navigation.navigate('/home');
+    navigation.navigate('/');
   }, [navigation, store]);
 
   if (!isFocused) return null;
@@ -42,7 +47,7 @@ function Account() {
       </Styled.Container>
     </SafeAreaView>
   );
-}
+};
 
 const Styled = {
   Container: styled.View`
