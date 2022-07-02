@@ -1,5 +1,4 @@
-import { useNavigation, useIsFocused } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useIsFocused } from '@react-navigation/native';
 import { useCallback } from 'react';
 import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';

@@ -92,11 +92,7 @@ type CheckRegistrationActionType = Generator<
   | Promise<never>
   | {
       redirectTo: '/auth/login' | '/auth/signup';
-      name: string;
-    }
-  | {
-      redirectTo: '/auth/login' | '/auth/signup';
-      name?: undefined;
+      name?: string;
     },
   CheckRegistrationType
 >;

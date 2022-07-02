@@ -1,7 +1,4 @@
-import type {
-  CompositeNavigationProp,
-  RouteProp,
-} from '@react-navigation/native';
+import type { CompositeNavigationProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 export type RootStackParamList = {
