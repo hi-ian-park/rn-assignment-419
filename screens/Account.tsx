@@ -20,13 +20,13 @@ const Account = ({ navigation }: AccountProps) => {
   console.log('hasToken: ', hasToken);
 
   const handlePressLogInBtn = useCallback(() => {
-    navigation.navigate('/auth');
+    navigation.reset({ routes: [{ name: '/auth' }] });
   }, [navigation]);
 
   const handlePressLogOutBtn = useCallback(async () => {
     store.logout();
     alert('logout');
-    navigation.navigate('/');
+    navigation.navigate('/', { screen: '/home' });
   }, [navigation, store]);
 
   if (!isFocused) return null;

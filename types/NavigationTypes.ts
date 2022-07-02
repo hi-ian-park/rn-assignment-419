@@ -1,11 +1,6 @@
 import type { CompositeNavigationProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-export type RootStackParamList = {
-  '/': undefined;
-  '/auth': undefined;
-};
-
 export type AuthStackParamList = {
   '/auth/onboard': undefined;
   '/auth/login-signup': undefined;
@@ -19,6 +14,11 @@ export type MainTabParamList = {
   '/home': undefined;
   '/search': undefined;
   '/account': undefined;
+};
+
+export type RootStackParamList = {
+  '/': { screen: keyof MainTabParamList } | undefined;
+  '/auth': { screen: keyof AuthStackParamList } | undefined;
 };
 
 export type OnboardScreenNavigationProp = CompositeNavigationProp<
