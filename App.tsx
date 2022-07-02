@@ -18,10 +18,10 @@ import { connectToDevTools } from 'react-devtools-core';
 import { ThemeProvider } from 'styled-components';
 
 import utils from 'lib/utils';
+import AppRootNavigator from 'navigation/AppRootNavigator';
 import { getToken } from 'service/auth.storage';
 import StoreProvider from 'store/StoreProvider';
 
-import Root from './navigation/Root';
 import { theme } from './styles/theme';
 
 if (__DEV__) {
@@ -61,7 +61,7 @@ export default function App() {
       <StoreProvider>
         <NavigationContainer>
           <StatusBar />
-          {lazyLoaded ? <Root /> : <AppLoading />}
+          {lazyLoaded ? <AppRootNavigator /> : <AppLoading />}
         </NavigationContainer>
       </StoreProvider>
     </ThemeProvider>

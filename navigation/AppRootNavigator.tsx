@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { observer } from 'mobx-react-lite';
 
-import { useStores } from 'store/useStore';
+import { useStores } from 'hooks/useStore';
 import { RootStackParamList } from 'types/NavigationTypes';
 
 import AuthStacks from './AuthStacks';
@@ -9,7 +9,7 @@ import MainTabs from './MainTabs';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
-const Root = () => {
+const AppRootNavigator = () => {
   const {
     auth: { isLoggedIn },
   } = useStores();
@@ -26,4 +26,4 @@ const Root = () => {
   );
 };
 
-export default observer(Root);
+export default observer(AppRootNavigator);

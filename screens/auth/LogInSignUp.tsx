@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 import Button from 'components/Button';
 import InputBase from 'components/Input';
 import Text from 'components/Text';
-import { useStores } from 'store/useStore';
+import { useStores } from 'hooks/useStore';
 import { LoginSignupScreenNavigationProp } from 'types/NavigationTypes';
 
 type LoginSignUpProp = {

@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 
 import Button from 'components/Button';
 import Text from 'components/Text';
-import { useStores } from 'store/useStore';
+import { useStores } from 'hooks/useStore';
 import { flexBox } from 'styles/utils';
 import { AccountScreenProps } from 'types/NavigationTypes';
 

@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 import Button from 'components/Button';
 import PasswordInput from 'components/Input/Password';
 import Text from 'components/Text';
-import { useStores } from 'store/useStore';
+import { useStores } from 'hooks/useStore';
 import { theme } from 'styles/theme';
 
 interface SignUpProps {
