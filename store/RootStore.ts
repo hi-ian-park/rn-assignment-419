@@ -1,6 +1,5 @@
 import { Instance, types, flow } from 'mobx-state-tree';
 
-import { removeToken } from 'service/auth.storage';
 import { userClient } from 'service/user.client';
 
 import { User } from './UserStore';
@@ -11,31 +10,24 @@ export const RootStore = types
     auth: types.optional(AuthStore, {}),
     user: types.maybe(User),
   })
+  .views((self) => ({
+    get checkActiveUser() {
+      return (
+        self.auth?.accessToken && self.user?.authority === 'ACTIVATED_USER'
+      );
+    },
+  }))
   .actions((self) => {
     const setCurrentUser = flow(function* () {
-      const { response, data } = yield userClient.getCurrent(
-        self.auth.accessToken
-      );
-      if (response.status !== 200) {
+      try {
+        const { data } = yield userClient.getCurrent(self.auth.accessToken);
+        self.user = data;
+      } catch {
         self.user = undefined;
       }
-      if (response.status === 200) {
-        self.user = data;
-      }
     });
 
-    const checkActiveUser = flow(function* () {
-      if (!self.auth?.accessToken) return false;
-      return self.user?.authority === 'ACTIVATED_USER';
-    });
-
-    const logout = () => {
-      removeToken();
-      self.auth.accessToken = undefined;
-      self.user = undefined;
-    };
-
-    return { setCurrentUser, checkActiveUser, logout };
+    return { setCurrentUser };
   });
 
 export type RootStoreType = Instance<typeof RootStore>;

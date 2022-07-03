@@ -32,7 +32,7 @@ const Login = ({ navigation, route }: SignUpProps) => {
       alert(message);
     } else {
       await store.setCurrentUser();
-      const isEmailVerified = await store.checkActiveUser();
+      const isEmailVerified = store.checkActiveUser;
       if (isEmailVerified) {
         navigation.navigate('/', {
           screen: '/home',

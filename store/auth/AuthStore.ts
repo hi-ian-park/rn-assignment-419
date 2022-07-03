@@ -1,14 +1,15 @@
 import jwtDecode from 'jwt-decode';
-import { flow, toGenerator, types } from 'mobx-state-tree';
+import { flow, toGenerator, types, getParent } from 'mobx-state-tree';
 
 import U from 'lib/utils';
-import { getToken, persistToken } from 'service/auth.storage';
+import { getToken, persistToken, removeToken } from 'service/auth.storage';
 import {
   CheckRegistrationType,
   LoginPayloadType,
   RegisterPayloadType,
   userClient,
 } from 'service/user.client';
+import { RootStoreType } from 'store/RootStore';
 
 // eslint-disable-next-line no-useless-escape
 const EMAIL_RGX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -28,15 +29,11 @@ export const AuthStore = types
     accessToken: types.maybe(types.string),
     payload: types.optional(Payload, {}),
   })
-  .views((self) => {
-    return {
-      get isLoggedIn() {
-        return (
-          !!self.accessToken && self.payload?.authority === 'ACTIVATED_USER'
-        );
-      },
-    };
-  })
+  .views((self) => ({
+    get isLoggedIn() {
+      return !!self.accessToken && self.payload?.authority === 'ACTIVATED_USER';
+    },
+  }))
   .actions((self) => {
     const setToken = flow(function* () {
       const storageToken = yield getToken();
@@ -71,20 +68,31 @@ export const AuthStore = types
       self.accessToken = data.accessToken;
     });
 
+    //TODO: refactor memoization value to views
     const login = flow(function* (payload: LoginPayloadType) {
       const { response, data } = yield userClient.login(payload);
       const { accessToken, message } = data;
 
-      if (response.status === 200) {
+      try {
         yield persistToken(accessToken);
         self.accessToken = accessToken;
         yield userClient.getCurrent(accessToken);
+      } catch (err) {
+        const message = U.getErrorMessage(err);
+        U.reportError({ message });
       }
 
       return { response, accessToken, message };
     });
 
-    return { setToken, checkRegistration, login, signup };
+    const logout = () => {
+      removeToken();
+      self.accessToken = undefined;
+      self.payload = undefined;
+      getParent<RootStoreType>(self).setCurrentUser();
+    };
+
+    return { setToken, checkRegistration, login, logout, signup };
   });
 
 type CheckRegistrationActionType = Generator<
