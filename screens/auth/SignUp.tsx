@@ -60,7 +60,7 @@ const SignUp = (props: SignUpProps) => {
         </Text>
         <PasswordInput
           value={password}
-          onChange={onPasswordInputChange}
+          onChangeText={onPasswordInputChange}
           placeholder="Password"
           placeholderTextColor={theme.colors.placeholder}
           textContentType="password"
