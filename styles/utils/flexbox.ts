@@ -1,3 +1,13 @@
+export const flexBox = (
+  direction = 'row',
+  align = 'center',
+  justify = 'center'
+) => `
+flex-direction: ${direction};
+align-items: ${convertFullName(align)};
+justify-content: ${convertFullName(justify)};
+`;
+
 function convertFullName(value: string): string {
   switch (value) {
     case 'start':
@@ -12,13 +22,3 @@ function convertFullName(value: string): string {
       return value;
   }
 }
-
-export const flexBox = (
-  direction = 'row',
-  align = 'center',
-  justify = 'center'
-) => `
-flex-direction: ${direction};
-align-items: ${convertFullName(align)};
-justify-content: ${convertFullName(justify)};
-`;

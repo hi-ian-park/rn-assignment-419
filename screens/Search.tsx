@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 import Text from 'components/Text';
 
-function Search() {
+const Search = () => {
   return (
     <Styled.Container>
       <Text size="xl" fontWeight="bold">
@@ -10,7 +10,7 @@ function Search() {
       </Text>
     </Styled.Container>
   );
-}
+};
 
 const Styled = {
   Container: styled.View`

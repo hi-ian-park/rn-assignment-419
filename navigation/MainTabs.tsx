@@ -8,7 +8,7 @@ import { MainTabParamList } from 'types/NavigationTypes';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
-function MainTabs() {
+const MainTabs = () => {
   return (
     <Tab.Navigator
       sceneContainerStyle={{
@@ -60,6 +60,6 @@ function MainTabs() {
       />
     </Tab.Navigator>
   );
-}
+};
 
 export default MainTabs;

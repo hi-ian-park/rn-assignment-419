@@ -11,7 +11,7 @@ import { AuthStackParamList } from 'types/NavigationTypes';
 
 const NativeStack = createNativeStackNavigator<AuthStackParamList>();
 
-function AuthStacks() {
+const AuthStacks = () => {
   return (
     <NativeStack.Navigator
       initialRouteName="/auth/onboard"
@@ -42,6 +42,6 @@ function AuthStacks() {
       />
     </NativeStack.Navigator>
   );
-}
+};
 
 export default AuthStacks;

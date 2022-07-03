@@ -13,7 +13,6 @@ const Onboard = () => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const navigation = useNavigation<OnboardScreenNavigationProp>();
 
-  // Event Handler
   const handlePressStartBtn = useCallback(() => {
     setIsBottomSheetOpen(true);
   }, []);

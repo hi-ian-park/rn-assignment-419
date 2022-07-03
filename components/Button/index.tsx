@@ -19,7 +19,7 @@ export type ButtonProps = {
   onPress?: () => void;
 };
 
-function Button(props: ButtonProps) {
+const Button = (props: ButtonProps) => {
   const {
     style,
     variant,
@@ -51,7 +51,7 @@ function Button(props: ButtonProps) {
       )}
     </Styled.Button>
   );
-}
+};
 
 export default Button;
 

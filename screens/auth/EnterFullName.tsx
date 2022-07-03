@@ -15,9 +15,10 @@ interface EnterFullNameProps {
 }
 
 const EnterFullName = (props: EnterFullNameProps) => {
-  const store = useStores();
   const { navigation, route } = props;
+  const store = useStores();
   const nameInputRef = useRef('');
+
   const onChangeText = useCallback((text: string) => {
     nameInputRef.current = text;
   }, []);

@@ -18,7 +18,7 @@ interface SignUpProps {
   };
 }
 
-function Login({ navigation, route }: SignUpProps) {
+const Login = ({ navigation, route }: SignUpProps) => {
   const store = useStores();
   const [password, setPassword] = useState('');
   const onChangeText = (text) => setPassword(text);
@@ -75,7 +75,7 @@ function Login({ navigation, route }: SignUpProps) {
       </Styled.Container>
     </SafeAreaView>
   );
-}
+};
 
 const Styled = {
   Container: styled.View`
