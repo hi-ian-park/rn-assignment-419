@@ -16,8 +16,12 @@ type PasswordInputProps = TextInputProps & {
   isHint?: boolean;
 };
 
-const PasswordInput = ({ value, validation, ...props }: PasswordInputProps) => {
-  const { isHint } = props;
+const PasswordInput = ({
+  value,
+  validation,
+  isHint,
+  ...props
+}: PasswordInputProps) => {
   const [hidePassword, setHidePassword] = useState(true);
   const handleShowPassword = () => setHidePassword(!hidePassword);
   const usable =
@@ -114,6 +118,11 @@ const PasswordInput = ({ value, validation, ...props }: PasswordInputProps) => {
 
 export default PasswordInput;
 
+type StyledInputProps = {
+  isFocus?: boolean;
+  usable?: boolean;
+};
+
 const Styled = {
   Container: styled.View`
     margin: 30px 0 60px 0;
@@ -121,7 +130,7 @@ const Styled = {
   `,
 
   // TODO: isFocus일 때 제대로 동작 하도록
-  Input: styled(InputBase)`
+  Input: styled(InputBase)<StyledInputProps>`
     border-bottom-color: ${({ theme, isFocus, usable }) =>
       usable
         ? '#00cb61'

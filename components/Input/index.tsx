@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { TextInputProps } from 'react-native';
 import styled from 'styled-components/native';
 
@@ -13,14 +13,18 @@ type InputBaseProps = TextInputProps & {
 const InputBase = (props: InputBaseProps) => {
   const [isFocus, setIsFocus] = useState(false);
 
+  const handleFocus = useCallback(() => setIsFocus(true), []);
+  const handleBlur = useCallback(() => setIsFocus(false), []);
+
   return (
     // FIXME: type 에러 고치기
     <Styled.Input
       {...props}
       isFocus={isFocus}
-      onFocus={() => setIsFocus(true)}
-      onBlur={() => setIsFocus(false)}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
       selectionColor={theme.colors.primary}
+      placeholderTextColor={theme.colors.placeholder}
     />
   );
 };
@@ -29,6 +33,7 @@ export default InputBase;
 
 type StyledInputType = {
   isFocus: boolean;
+  usable?: boolean;
 };
 
 const Styled = {

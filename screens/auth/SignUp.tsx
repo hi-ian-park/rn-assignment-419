@@ -5,6 +5,7 @@ import styled from 'styled-components/native';
 import Button from 'components/Button';
 import PasswordInput from 'components/Input/Password';
 import Text from 'components/Text';
+import { theme } from 'styles/theme';
 import { SignUpScreenProps } from 'types/NavigationTypes';
 
 interface SignUpProps {
@@ -57,7 +58,7 @@ const SignUp = (props: SignUpProps) => {
           value={password}
           onChangeText={onChangeText}
           placeholder="Password"
-          placeholderTextColor="#7b7b7b"
+          placeholderTextColor={theme.colors.placeholder}
           textContentType="password"
           validation={RULES}
           isHint

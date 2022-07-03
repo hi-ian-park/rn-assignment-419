@@ -39,8 +39,8 @@ const LogInSignUp = (props: LoginSignUpProp) => {
           <InputBase
             onChangeText={onChangeText}
             keyboardType="email-address"
+            autoCapitalize="none"
             placeholder="Enter email address"
-            placeholderTextColor="#7b7b7b"
           />
         </Styled.InputWrapper>
         <Button onPress={handlePressNextBtn} size="100%" variant="primary">

@@ -17,7 +17,6 @@ const Account = ({ navigation }: AccountProps) => {
   const store = useStores();
   const isFocused = useIsFocused();
   const hasToken = !!store.auth?.accessToken;
-  console.log('hasToken: ', hasToken);
 
   const handlePressLogInBtn = useCallback(() => {
     navigation.reset({ routes: [{ name: '/auth' }] });

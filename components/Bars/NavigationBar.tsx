@@ -5,9 +5,7 @@ import styled from 'styled-components/native';
 
 import { flexBox } from 'styles/utils';
 
-interface NavigationBarProps {}
-
-const NavigationBar = (props: NavigationBarProps) => {
+const NavigationBar = () => {
   const navigation = useNavigation();
   const handleGoBackBtn = () => navigation.goBack();
   return (
@@ -21,7 +19,6 @@ const NavigationBar = (props: NavigationBarProps) => {
 
 export default NavigationBar;
 
-// FIXME: base component에 margin 노노 수정방법 생각할 것
 const Styled = {
   Header: styled.View`
     ${flexBox('row', 'center', 'start')}

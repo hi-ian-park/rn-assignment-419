@@ -43,7 +43,7 @@ const EnterFullName = (props: EnterFullNameProps) => {
         Enter your full name
       </Text>
       <Styled.InputWrapper>
-        <InputBase onChangeText={onChangeText} placeholderTextColor="#7b7b7b" />
+        <InputBase onChangeText={onChangeText} />
       </Styled.InputWrapper>
       <Styled.HintWrapper>
         <Text size="xs" color={theme.colors.hintText}>

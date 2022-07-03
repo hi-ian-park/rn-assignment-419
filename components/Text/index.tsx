@@ -24,7 +24,6 @@ const Text = (props: TextProps) => {
     ...others
   } = props;
 
-  // TODO: 이거먼저 밑줄, 취소선 style을 기본컴포넌트에서 만드는 방법 찾기
   return (
     <Styled.Text
       size={size}
