@@ -21,7 +21,7 @@ interface SignUpProps {
 const Login = ({ navigation, route }: SignUpProps) => {
   const store = useStores();
   const [password, setPassword] = useState('');
-  const onChangeText = (text: string) => setPassword(text);
+  const onPasswordInputChange = (text: string) => setPassword(text);
   const handlePressLoginBtn = async () => {
     const { response, message } = await store.auth.login({
       email: route.params.email,
@@ -57,7 +57,7 @@ const Login = ({ navigation, route }: SignUpProps) => {
         </Text>
         <PasswordInput
           value={password}
-          onChangeText={onChangeText}
+          onChangeText={onPasswordInputChange}
           placeholder="Password"
           textContentType="password"
         />

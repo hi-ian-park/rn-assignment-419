@@ -30,7 +30,11 @@ const RULES = {
 const SignUp = (props: SignUpProps) => {
   const [password, setPassword] = useState('');
   const { navigation, route } = props;
-  const onChangeText = (text: string) => setPassword(text);
+  const onPasswordInputChange = useCallback(
+    (text: string) => setPassword(text),
+    []
+  );
+
   const handlePressNextBtn = useCallback(() => {
     const usable =
       RULES.length(password) &&
@@ -56,7 +60,7 @@ const SignUp = (props: SignUpProps) => {
         </Text>
         <PasswordInput
           value={password}
-          onChangeText={onChangeText}
+          onChange={onPasswordInputChange}
           placeholder="Password"
           placeholderTextColor={theme.colors.placeholder}
           textContentType="password"

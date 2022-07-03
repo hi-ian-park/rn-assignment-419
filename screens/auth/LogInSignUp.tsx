@@ -17,7 +17,7 @@ const LogInSignUp = (props: LoginSignUpProp) => {
   const store = useStores().auth;
   const emailInputRef = useRef('');
 
-  const onChangeText = (text: string) => (emailInputRef.current = text);
+  const onEmailInputChange = (text: string) => (emailInputRef.current = text);
   const handlePressNextBtn = useCallback(async () => {
     const { redirectTo, name } = await store.checkRegistration(
       emailInputRef.current
@@ -37,7 +37,7 @@ const LogInSignUp = (props: LoginSignUpProp) => {
 
         <Styled.InputWrapper>
           <InputBase
-            onChangeText={onChangeText}
+            onChangeText={onEmailInputChange}
             keyboardType="email-address"
             autoCapitalize="none"
             placeholder="Enter email address"
