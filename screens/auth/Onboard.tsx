@@ -45,14 +45,12 @@ const Onboard = () => {
         <Button
           style={{ marginBottom: 10 }}
           onPress={handlePressStartBtn}
-          size="100%"
           variant="primary"
         >
           Get Started
         </Button>
         <Button
           onPress={handlePressContinueAsGuestBtn}
-          size="100%"
           variant="ghost"
           fontSize="sm"
         >
@@ -67,7 +65,6 @@ const Onboard = () => {
           backgroundColor="#0F0F0F"
           iconColor="#fff"
           onPress={onCloseBottomSheet}
-          size="100%"
         >
           Continue with Apple
         </Styled.SocialLoginButton>
@@ -78,7 +75,6 @@ const Onboard = () => {
           iconColor="#333"
           variant="outlined"
           onPress={onCloseBottomSheet}
-          size="100%"
         >
           Continue with Google
         </Styled.SocialLoginButton>
@@ -89,13 +85,11 @@ const Onboard = () => {
           backgroundColor="#007DFF"
           iconColor="#fff"
           onPress={onCloseBottomSheet}
-          size="100%"
         >
           Continue with Facebook
         </Styled.SocialLoginButton>
         <Button
           onPress={handlePressContinueWithEmailBtn}
-          size="100%"
           variant="ghost"
           fontSize="sm"
         >

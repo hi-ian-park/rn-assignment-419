@@ -67,7 +67,7 @@ const SignUp = (props: SignUpProps) => {
           validation={RULES}
           isHint
         />
-        <Button size="100%" variant="primary" onPress={handlePressNextBtn}>
+        <Button variant="primary" onPress={handlePressNextBtn}>
           Next
         </Button>
       </Styled.Container>

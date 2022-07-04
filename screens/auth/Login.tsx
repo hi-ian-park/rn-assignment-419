@@ -62,12 +62,12 @@ const Login = ({ navigation, route }: LoginProps) => {
           placeholder="Password"
           textContentType="password"
         />
-        <Button size="100%" variant="primary" onPress={handlePressLoginBtn}>
+        <Button variant="primary" onPress={handlePressLoginBtn}>
           <Text fontWeight="bold" color={theme.colors.white}>
             Login
           </Text>
         </Button>
-        <Button size="100%" variant="ghost">
+        <Button variant="ghost">
           <Text fontWeight="semiBold" color={theme.colors.primary}>
             Forgot password?
           </Text>

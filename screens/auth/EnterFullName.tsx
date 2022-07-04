@@ -49,7 +49,7 @@ const EnterFullName = (props: EnterFullNameProps) => {
           Let your family and friends know who you are!
         </Text>
       </Styled.HintWrapper>
-      <Button variant="primary" size="100%" onPress={handlePressSignUpBtn}>
+      <Button variant="primary" onPress={handlePressSignUpBtn}>
         Sign up
       </Button>
     </Styled.Container>

@@ -52,10 +52,8 @@ const SendVerification = (props: SendVerificationProps) => {
       </Styled.InfoWrapper>
 
       <Styled.ButtonWrapper>
-        <Button variant="primary" size="100%">
-          Open email
-        </Button>
-        <Button variant="ghost" size="100%" onPress={handlePressResendBtn}>
+        <Button variant="primary">Open email</Button>
+        <Button variant="ghost" onPress={handlePressResendBtn}>
           <Text color={theme.colors.primary}>Resend email</Text>
         </Button>
       </Styled.ButtonWrapper>

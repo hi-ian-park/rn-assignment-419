@@ -36,7 +36,6 @@ const Account = ({ navigation }: AccountProps) => {
           {store.user?.name || 'Log in or Sign up'}
         </Text>
         <Button
-          size="100%"
           variant="primary"
           onPress={hasToken ? handlePressLogOutBtn : handlePressLogInBtn}
         >

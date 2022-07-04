@@ -43,7 +43,7 @@ const LogInSignUp = (props: LoginSignUpProp) => {
             placeholder="Enter email address"
           />
         </Styled.InputWrapper>
-        <Button onPress={handlePressNextBtn} size="100%" variant="primary">
+        <Button onPress={handlePressNextBtn} variant="primary">
           Next
         </Button>
       </Styled.Container>

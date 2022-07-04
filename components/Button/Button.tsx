@@ -13,7 +13,7 @@ export type ButtonProps = {
   style?: StyleProp<ViewStyle>;
   variant?: ButtonVariant;
   backgroundColor?: string;
-  size: '100%';
+  size?: ButtonSize;
   fontSize?: TypographyScale;
   children?: any;
   onPress?: () => void;
@@ -24,7 +24,7 @@ const Button = (props: ButtonProps) => {
     style,
     variant,
     children,
-    size,
+    size = '100%',
     onPress,
     backgroundColor,
     fontSize,
