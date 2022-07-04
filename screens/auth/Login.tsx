@@ -2,14 +2,15 @@ import { useState } from 'react';
 import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
 
-import Button from 'components/Button';
+import Button from 'components/Button/Button';
 import PasswordInput from 'components/Input/Password';
-import Text from 'components/Text';
+import Text from 'components/Text/Text';
 import { useStores } from 'hooks/useStore';
 import { theme } from 'styles/theme';
+import { LoginScreenProps } from 'types/NavigationTypes';
 
-interface SignUpProps {
-  navigation: any;
+interface LoginProps {
+  navigation: LoginScreenProps;
   route: {
     params: {
       email: string;
@@ -18,7 +19,7 @@ interface SignUpProps {
   };
 }
 
-const Login = ({ navigation, route }: SignUpProps) => {
+const Login = ({ navigation, route }: LoginProps) => {
   const store = useStores();
   const [password, setPassword] = useState('');
   const onPasswordInputChange = (text: string) => setPassword(text);

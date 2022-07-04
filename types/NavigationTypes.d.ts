@@ -7,7 +7,7 @@ export type AuthStackParamList = {
   '/auth/signup': { name: string | undefined; email: string };
   '/auth/login': { name: string; email: string };
   '/auth/enter-full-name': { name: string; email: string; password: string };
-  '/auth/send-verification': { accessToken: string; email: string };
+  '/auth/send-verification': { email: string; name: string };
 };
 
 export type MainTabParamList = {
@@ -40,5 +40,8 @@ export type LoginScreenProps = NativeStackNavigationProp<
   AuthStackParamList,
   '/auth/login'
 >;
+
+export type EnterFullNameScreenProps =
+  NativeStackScreenProps<AuthStackParamList>['navigation'];
 
 export type AccountScreenProps = NativeStackNavigationProp<RootStackParamList>;

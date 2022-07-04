@@ -4,7 +4,7 @@ import { ImageBackground } from 'react-native';
 import styled from 'styled-components/native';
 
 import BottomSheet from 'components/BottomSheet';
-import Button from 'components/Button';
+import Button from 'components/Button/Button';
 import SocialLoginButton from 'components/Button/SocialLoginButton';
 import { flexBox } from 'styles/utils';
 import { OnboardScreenNavigationProp } from 'types/NavigationTypes';

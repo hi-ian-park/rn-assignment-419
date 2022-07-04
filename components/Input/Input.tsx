@@ -5,12 +5,12 @@ import styled from 'styled-components/native';
 import { theme } from 'styles/theme';
 import { flexBox, textStyle } from 'styles/utils';
 
-type InputBaseProps = TextInputProps & {
+type InputProps = TextInputProps & {
   label?: string;
   error?: any;
 };
 
-const InputBase = (props: InputBaseProps) => {
+const Input = (props: InputProps) => {
   const [isFocus, setIsFocus] = useState(false);
 
   const handleFocus = useCallback(() => setIsFocus(true), []);
@@ -29,7 +29,7 @@ const InputBase = (props: InputBaseProps) => {
   );
 };
 
-export default InputBase;
+export default Input;
 
 type StyledInputType = {
   isFocus: boolean;

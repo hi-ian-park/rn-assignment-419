@@ -2,8 +2,8 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { View } from 'react-native';
 import styled from 'styled-components/native';
 
-import Button, { ButtonProps } from 'components/Button';
-import Text from 'components/Text';
+import Button, { ButtonProps } from 'components/Button/Button';
+import Text from 'components/Text/Text';
 import { flexBox } from 'styles/utils';
 
 type SocialLoginButtonProps = ButtonProps & {

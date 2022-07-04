@@ -1,8 +1,8 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import styled from 'styled-components/native';
 
-import Button from 'components/Button';
-import Text from 'components/Text';
+import Button from 'components/Button/Button';
+import Text from 'components/Text/Text';
 import { useStores } from 'hooks/useStore';
 import { theme } from 'styles/theme';
 import { flexBox } from 'styles/utils';

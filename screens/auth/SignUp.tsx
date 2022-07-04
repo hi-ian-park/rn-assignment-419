@@ -2,9 +2,9 @@ import { useState, useCallback } from 'react';
 import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
 
-import Button from 'components/Button';
+import Button from 'components/Button/Button';
 import PasswordInput from 'components/Input/Password';
-import Text from 'components/Text';
+import Text from 'components/Text/Text';
 import { theme } from 'styles/theme';
 import { SignUpScreenProps } from 'types/NavigationTypes';
 

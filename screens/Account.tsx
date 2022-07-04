@@ -3,8 +3,8 @@ import { useCallback } from 'react';
 import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
 
-import Button from 'components/Button';
-import Text from 'components/Text';
+import Button from 'components/Button/Button';
+import Text from 'components/Text/Text';
 import { useStores } from 'hooks/useStore';
 import { flexBox } from 'styles/utils';
 import { AccountScreenProps } from 'types/NavigationTypes';

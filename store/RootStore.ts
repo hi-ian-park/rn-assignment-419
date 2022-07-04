@@ -2,8 +2,8 @@ import { Instance, types, flow } from 'mobx-state-tree';
 
 import { userClient } from 'service/user.client';
 
-import { User } from './UserStore';
 import { AuthStore } from './auth/AuthStore';
+import { User } from './user/UserStore';
 
 export const RootStore = types
   .model('RootStore', {

@@ -1,16 +1,15 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useRef, useCallback } from 'react';
 import styled from 'styled-components/native';
 
-import Button from 'components/Button';
-import InputBase from 'components/Input';
-import Text from 'components/Text';
+import Button from 'components/Button/Button';
+import Input from 'components/Input/Input';
+import Text from 'components/Text/Text';
 import { useStores } from 'hooks/useStore';
 import { theme } from 'styles/theme';
-import { AuthStackParamList } from 'types/NavigationTypes';
+import { EnterFullNameScreenProps } from 'types/NavigationTypes';
 
 interface EnterFullNameProps {
-  navigation: NativeStackScreenProps<AuthStackParamList>['navigation'];
+  navigation: EnterFullNameScreenProps;
   route: { params: { email: string; password: string; name: string } };
 }
 
@@ -43,7 +42,7 @@ const EnterFullName = (props: EnterFullNameProps) => {
         Enter your full name
       </Text>
       <Styled.InputWrapper>
-        <InputBase onChangeText={onChangeText} />
+        <Input onChangeText={onChangeText} />
       </Styled.InputWrapper>
       <Styled.HintWrapper>
         <Text size="xs" color={theme.colors.hintText}>

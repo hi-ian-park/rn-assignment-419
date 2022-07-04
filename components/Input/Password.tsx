@@ -2,9 +2,9 @@ import { useCallback, useState } from 'react';
 import { TextInputProps, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 
-import Text from 'components/Text';
+import Text from 'components/Text/Text';
 
-import InputBase from '.';
+import Input from './Input';
 
 type PasswordValidationType = {
   [key: string]: (text: string) => boolean;
@@ -130,7 +130,7 @@ const Styled = {
   `,
 
   // TODO: isFocus일 때 제대로 동작 하도록
-  Input: styled(InputBase)<StyledInputProps>`
+  Input: styled(Input)<StyledInputProps>`
     border-bottom-color: ${({ theme, isFocus, usable }) =>
       usable
         ? '#00cb61'

@@ -2,7 +2,7 @@ import { StyleProp, ViewStyle } from 'react-native';
 import { TypographyScale } from 'styled-components';
 import styled from 'styled-components/native';
 
-import Text from 'components/Text';
+import Text from 'components/Text/Text';
 import { theme } from 'styles/theme';
 import { flexBox } from 'styles/utils';
 
