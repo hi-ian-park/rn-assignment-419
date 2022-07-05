@@ -6,10 +6,10 @@ import Button from 'components/Button/Button';
 import Input from 'components/Input/Input';
 import Text from 'components/Text/Text';
 import { useStores } from 'hooks/useStore';
-import { LoginSignupScreenNavigationProp } from 'types/NavigationTypes';
+import { LoginSignupScreenProp } from 'types/NavigationTypes';
 
 type LoginSignUpProp = {
-  navigation: LoginSignupScreenNavigationProp;
+  navigation: LoginSignupScreenProp;
 };
 
 const LogInSignUp = (props: LoginSignUpProp) => {

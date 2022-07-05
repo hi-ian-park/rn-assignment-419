@@ -11,7 +11,7 @@ export type AuthStackParamList = {
 };
 
 export type MainTabParamList = {
-  '/home': undefined;
+  '/home': { email: string; name: string } | undefined;
   '/search': undefined;
   '/account': undefined;
 };
@@ -26,19 +26,22 @@ export type OnboardScreenNavigationProp = CompositeNavigationProp<
   NativeStackNavigationProp<AuthStackParamList, '/auth/login-signup'>
 >;
 
-export type LoginSignupScreenNavigationProp = NativeStackNavigationProp<
+export type LoginSignupScreenProp = NativeStackScreenProp<
   AuthStackParamList,
   '/auth/login-signup'
 >;
 
-export type SignUpScreenProps = NativeStackNavigationProp<
+export type SignUpScreenProps = NativeStackScreenProp<
   AuthStackParamList,
   '/auth/signup'
 >;
 
-export type LoginScreenProps = NativeStackNavigationProp<
-  AuthStackParamList,
-  '/auth/login'
+export type LoginScreenNavigationProps = CompositeNavigationProp<
+  NativeStackNavigationProp<RootStackParamList>,
+  NativeStackNavigationProp<
+    AuthStackParamList,
+    '/auth/send-verification'
+  >['navigation']
 >;
 
 export type EnterFullNameScreenProps =

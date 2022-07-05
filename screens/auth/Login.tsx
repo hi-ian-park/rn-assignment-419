@@ -6,12 +6,11 @@ import Button from 'components/Button/Button';
 import PasswordInput from 'components/Input/Password';
 import Text from 'components/Text/Text';
 import { useStores } from 'hooks/useStore';
-import { utils } from 'lib/utils';
 import { theme } from 'styles/theme';
-import { LoginScreenProps } from 'types/NavigationTypes';
+import { LoginScreenNavigationProps } from 'types/NavigationTypes';
 
 interface LoginProps {
-  navigation: LoginScreenProps;
+  navigation: LoginScreenNavigationProps;
   route: {
     params: {
       email: string;
@@ -27,25 +26,17 @@ const Login = ({ navigation, route }: LoginProps) => {
 
   const handlePressLoginBtn = async () => {
     try {
-      await store.auth.login({
+      const { redirectTo, screen } = await store.auth.login({
         email: route.params.email,
         password,
       });
-    } catch (err) {
-      console.dir(err);
-      alert(err);
-    }
 
-    const isEmailVerified = store.auth.isActivateUser;
-    if (isEmailVerified) {
-      navigation.navigate('/', {
-        screen: '/home',
-      });
-    } else {
-      navigation.navigate('/auth/send-verification', {
+      navigation.navigate(redirectTo, {
+        screen,
         ...route.params,
-        password,
       });
+    } catch (err) {
+      alert(err.message);
     }
   };
 
