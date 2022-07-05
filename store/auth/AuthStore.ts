@@ -15,10 +15,12 @@ import { getToken, persistToken, removeToken } from 'service/auth.storage';
 import {
   CheckRegistrationType,
   LoginPayloadType,
+  LoginReturnType,
   RegisterPayloadType,
   userClient,
 } from 'service/user.client';
 import { RootStoreType } from 'store/RootStore';
+import { MainTabParamList, AuthStackParamList } from 'types/NavigationTypes';
 
 // eslint-disable-next-line no-useless-escape
 const EMAIL_RGX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -77,15 +79,15 @@ export const AuthStore = types
       self.accessToken = accessToken;
     });
 
-    const login = flow(function* (payload: LoginPayloadType) {
+    const login = flow(function* (payload: LoginPayloadType): LoginActionType {
       try {
         const { accessToken } = yield userClient.login(payload);
         yield persistToken(accessToken);
-        getParent<RootStoreType>(self).setCurrentUser();
         self.accessToken = accessToken;
         self.payload = jwtDecode(accessToken.split(' ')[1]);
 
         if (self.isActivateUser) {
+          getParent<RootStoreType>(self).setCurrentUser();
           return { redirectTo: '/', screen: '/home' };
         } else {
           return { redirectTo: '/auth/send-verification' };
@@ -113,4 +115,14 @@ type CheckRegistrationActionType = Generator<
       name?: string;
     },
   CheckRegistrationType
+>;
+
+type LoginActionType = Generator<
+  Promise<LoginReturnType> | Promise<void>,
+  | Promise<never>
+  | {
+      redirectTo: '/' | '/auth/send-verification';
+      screen?: keyof MainTabParamList | keyof AuthStackParamList;
+    },
+  LoginReturnType
 >;

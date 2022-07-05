@@ -13,7 +13,7 @@ export type RegisterPayloadType = {
 };
 
 export const userClient = {
-  login: async (payload: LoginPayloadType) => {
+  login: async (payload: LoginPayloadType): Promise<LoginReturnType> => {
     const url = authUrl.login;
     const options = {
       method: 'POST',
@@ -80,4 +80,8 @@ export type CheckRegistrationType = {
   registered: boolean;
   name?: string;
   provider?: string;
+};
+
+export type LoginReturnType = {
+  accessToken: string;
 };
