@@ -16,7 +16,7 @@ interface AccountProps {
 const Account = ({ navigation }: AccountProps) => {
   const store = useStores();
   const isFocused = useIsFocused();
-  const hasToken = !!store.auth?.accessToken;
+  const isLoggedIn = !!store.auth.isActivateUser;
 
   const handlePressLogInBtn = useCallback(() => {
     navigation.reset({ routes: [{ name: '/auth' }] });
@@ -37,9 +37,9 @@ const Account = ({ navigation }: AccountProps) => {
         </Text>
         <Button
           variant="primary"
-          onPress={hasToken ? handlePressLogOutBtn : handlePressLogInBtn}
+          onPress={isLoggedIn ? handlePressLogOutBtn : handlePressLogInBtn}
         >
-          {hasToken ? 'Log out' : 'Log in'}
+          {isLoggedIn ? 'Log out' : 'Log in'}
         </Button>
       </Styled.Container>
     </SafeAreaView>
