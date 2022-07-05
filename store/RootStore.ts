@@ -10,18 +10,11 @@ export const RootStore = types
     auth: types.optional(AuthStore, {}),
     user: types.maybe(User),
   })
-  .views((self) => ({
-    get checkActiveUser() {
-      return (
-        self.auth?.accessToken && self.user?.authority === 'ACTIVATED_USER'
-      );
-    },
-  }))
   .actions((self) => {
     const setCurrentUser = flow(function* () {
       try {
-        const { data } = yield userClient.getCurrent(self.auth.accessToken);
-        self.user = data;
+        const user = yield userClient.getCurrent(self.auth.accessToken);
+        self.user = user;
       } catch {
         self.user = undefined;
       }

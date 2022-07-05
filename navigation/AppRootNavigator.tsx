@@ -11,16 +11,18 @@ const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 const AppRootNavigator = () => {
   const {
-    auth: { isLoggedIn },
+    auth: { isActivateUser },
   } = useStores();
-  const initialRouteName = isLoggedIn ? '/' : '/auth';
+  const initialRouteName = isActivateUser ? '/' : '/auth';
 
   return (
     <RootStack.Navigator
       initialRouteName={initialRouteName}
       screenOptions={{ headerShown: false }}
     >
-      {!isLoggedIn && <RootStack.Screen name="/auth" component={AuthStacks} />}
+      {!isActivateUser && (
+        <RootStack.Screen name="/auth" component={AuthStacks} />
+      )}
       <RootStack.Screen name="/" component={MainTabs} />
     </RootStack.Navigator>
   );
