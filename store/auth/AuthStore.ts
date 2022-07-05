@@ -1,3 +1,12 @@
+/*******
+ ** Action convention
+ ** loadXXXasync -> 원격지 데이터를 가져와 적재(스토어에 내부 값 할당) / return 없음
+ ** fetchXXXasync -> 원격지 데이터 가져와 값만 리턴 / store 내부 값 할당 X
+ ** saveXXXasync -> local storage에 저장
+ ** updateXXXasync -> 원격지의 기존 데이터 update
+ ** setXXXasync -> store 값 할당
+ *******/
+
 import jwtDecode from 'jwt-decode';
 import { flow, toGenerator, types, getParent } from 'mobx-state-tree';
 
@@ -30,7 +39,7 @@ export const AuthStore = types
     payload: types.optional(Payload, {}),
   })
   .views((self) => ({
-    get isLoggedIn() {
+    get isActivateUser() {
       return !!self.accessToken && self.payload?.authority === 'ACTIVATED_USER';
     },
   }))
@@ -63,26 +72,27 @@ export const AuthStore = types
     });
 
     const signup = flow(function* (payload: RegisterPayloadType) {
-      const { data } = yield userClient.register(payload);
-      yield persistToken(data.accessToken);
-      self.accessToken = data.accessToken;
+      const { accessToken } = yield userClient.register(payload);
+      yield persistToken(accessToken);
+      self.accessToken = accessToken;
     });
 
-    //TODO: refactor memoization value to views
     const login = flow(function* (payload: LoginPayloadType) {
-      const { response, data } = yield userClient.login(payload);
-      const { accessToken, message } = data;
-
       try {
+        const { accessToken } = yield userClient.login(payload);
         yield persistToken(accessToken);
+        getParent<RootStoreType>(self).setCurrentUser();
         self.accessToken = accessToken;
-        yield userClient.getCurrent(accessToken);
-      } catch (err) {
-        const message = U.getErrorMessage(err);
-        U.reportError({ message });
-      }
+        self.payload = jwtDecode(accessToken.split(' ')[1]);
 
-      return { response, accessToken, message };
+        if (self.isActivateUser) {
+          return { redirectTo: '/', screen: '/home' };
+        } else {
+          return { redirectTo: '/auth/send-verification' };
+        }
+      } catch (err) {
+        throw new Error(err.message);
+      }
     });
 
     const logout = () => {

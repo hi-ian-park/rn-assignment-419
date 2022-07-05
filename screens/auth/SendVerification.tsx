@@ -24,6 +24,7 @@ const SendVerification = (props: SendVerificationProps) => {
 
   const handlePressResendBtn = async () => {
     console.log(store.auth.accessToken);
+    console.log(store.auth);
   };
 
   return (

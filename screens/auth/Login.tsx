@@ -6,6 +6,7 @@ import Button from 'components/Button/Button';
 import PasswordInput from 'components/Input/Password';
 import Text from 'components/Text/Text';
 import { useStores } from 'hooks/useStore';
+import { utils } from 'lib/utils';
 import { theme } from 'styles/theme';
 import { LoginScreenProps } from 'types/NavigationTypes';
 
@@ -23,27 +24,28 @@ const Login = ({ navigation, route }: LoginProps) => {
   const store = useStores();
   const [password, setPassword] = useState('');
   const onPasswordInputChange = (text: string) => setPassword(text);
-  const handlePressLoginBtn = async () => {
-    const { response, message } = await store.auth.login({
-      email: route.params.email,
-      password,
-    });
 
-    if (response.status !== 200) {
-      alert(message);
+  const handlePressLoginBtn = async () => {
+    try {
+      await store.auth.login({
+        email: route.params.email,
+        password,
+      });
+    } catch (err) {
+      console.dir(err);
+      alert(err);
+    }
+
+    const isEmailVerified = store.auth.isActivateUser;
+    if (isEmailVerified) {
+      navigation.navigate('/', {
+        screen: '/home',
+      });
     } else {
-      await store.setCurrentUser();
-      const isEmailVerified = store.checkActiveUser;
-      if (isEmailVerified) {
-        navigation.navigate('/', {
-          screen: '/home',
-        });
-      } else {
-        navigation.navigate('/auth/send-verification', {
-          ...route.params,
-          password,
-        });
-      }
+      navigation.navigate('/auth/send-verification', {
+        ...route.params,
+        password,
+      });
     }
   };
 

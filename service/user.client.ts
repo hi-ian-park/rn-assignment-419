@@ -22,8 +22,15 @@ export const userClient = {
     };
 
     const response = await fetch(url, options);
-    const data = await response.json();
-    return { response, data };
+    if (response.ok) {
+      return await response.json();
+    } else {
+      if (response.status === 401) {
+        throw new Error('Invalid password');
+      } else {
+        throw new Error(response.status.toString());
+      }
+    }
   },
 
   register: async (payload: RegisterPayloadType) => {
@@ -36,7 +43,7 @@ export const userClient = {
 
     const response = await fetch(url, options);
     const data = await response.json();
-    return { response, data };
+    return data;
   },
 
   checkRegistration: async (email: string): Promise<CheckRegistrationType> => {
@@ -65,7 +72,7 @@ export const userClient = {
 
     const response = await fetch(url, options);
     const data = await response.json();
-    return { response, data };
+    return data;
   },
 };
 
