@@ -1,3 +1,5 @@
+import { ErrorCode } from 'lib/constant';
+
 import { authUrl } from './api-config';
 import { DEFAULT_POST_HEADERS } from './default.headers';
 
@@ -13,7 +15,7 @@ export type RegisterPayloadType = {
 };
 
 export const userClient = {
-  login: async (payload: LoginPayloadType): Promise<LoginReturnType> => {
+  login: async (payload: LoginPayloadType): Promise<LoginResponse> => {
     const url = authUrl.login;
     const options = {
       method: 'POST',
@@ -22,13 +24,14 @@ export const userClient = {
     };
 
     const response = await fetch(url, options);
+    const data = await response.json();
     if (response.ok) {
-      return await response.json();
+      return data;
     } else {
-      if (response.status === 401) {
-        throw new Error('Invalid password');
+      if (data.errorCode === ErrorCode.Auth.IncorrectCredentials) {
+        throw new Error('Incorrect email or password');
       } else {
-        throw new Error(response.status.toString());
+        throw new Error(data);
       }
     }
   },
@@ -82,6 +85,6 @@ export type CheckRegistrationType = {
   provider?: string;
 };
 
-export type LoginReturnType = {
+export type LoginResponse = {
   accessToken: string;
 };
