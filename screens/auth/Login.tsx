@@ -26,7 +26,7 @@ const Login = ({ navigation, route }: LoginProps) => {
 
   const handlePressLoginBtn = async () => {
     try {
-      const { redirectTo, screen } = await store.auth.login({
+      const { redirectTo, screen } = await store.auth.loginAsync({
         email: route.params.email,
         password,
       });

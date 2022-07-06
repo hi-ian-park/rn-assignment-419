@@ -23,7 +23,7 @@ const EnterFullName = (props: EnterFullNameProps) => {
   }, []);
 
   const handlePressSignUpBtn = useCallback(async () => {
-    await store.auth.signup({
+    await store.auth.signupAsync({
       ...route.params,
       name: nameInputRef.current,
     });

@@ -23,7 +23,7 @@ const Account = ({ navigation }: AccountProps) => {
   }, [navigation]);
 
   const handlePressLogOutBtn = useCallback(async () => {
-    store.auth.logout();
+    await store.auth.logoutAsync();
     alert('logout');
     navigation.navigate('/', { screen: '/home' });
   }, [navigation, store]);

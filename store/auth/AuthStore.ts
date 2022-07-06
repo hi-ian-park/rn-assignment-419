@@ -1,65 +1,99 @@
-/*******
- ** Action convention
- ** loadXXXasync -> 원격지 데이터를 가져와 적재(스토어에 내부 값 할당) / return 없음
- ** fetchXXXasync -> 원격지 데이터 가져와 값만 리턴 / store 내부 값 할당 X
- ** saveXXXasync -> local storage에 저장
- ** updateXXXasync -> 원격지의 기존 데이터 update
- ** setXXXasync -> store 값 할당
- *******/
-
 import jwtDecode from 'jwt-decode';
-import { flow, toGenerator, types, getParent } from 'mobx-state-tree';
+import { flow, toGenerator, types, getParent, Instance } from 'mobx-state-tree';
 
-import U from 'lib/utils';
+import { Authority } from 'lib/constant';
 import { getToken, persistToken, removeToken } from 'service/auth.storage';
 import {
-  CheckRegistrationType,
   LoginPayloadType,
-  LoginReturnType,
   RegisterPayloadType,
   userClient,
 } from 'service/user.client';
 import { RootStoreType } from 'store/RootStore';
-import { MainTabParamList, AuthStackParamList } from 'types/NavigationTypes';
 
 // eslint-disable-next-line no-useless-escape
 const EMAIL_RGX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-const Payload = types.model('Payload', {
-  sub: types.optional(types.string, ''),
-  authority: types.maybe(
-    types.enumeration('Authority', ['ACTIVATED_USER', 'TEMPORARY_USER'])
-  ),
-  firstLogin: types.maybe(types.boolean),
-  provider: types.maybe(types.enumeration('Provider', ['LOCAL'])),
-  exp: types.optional(types.number, 0),
-});
+const AccessToken = types
+  .model('AccessToken', {
+    jwt: types.optional(types.string, ''),
+  })
+  .actions((self) => ({
+    init() {
+      self.jwt = '';
+    },
+
+    setTokenAsync: flow(function* () {
+      try {
+        const token = yield getToken();
+        self.jwt = token;
+      } catch {
+        self.jwt = '';
+      }
+    }),
+  }));
+
+const Payload = types
+  .model('Payload', {
+    sub: types.optional(types.string, ''),
+    authority: types.maybe(
+      types.enumeration('Authority', ['ACTIVATED_USER', 'TEMPORARY_USER'])
+    ),
+    firstLogin: types.maybe(types.boolean),
+    provider: types.maybe(types.enumeration('Provider', ['LOCAL'])),
+    exp: types.optional(types.number, 0),
+  })
+  .actions((self) => ({
+    init() {
+      self.sub = '';
+      self.authority = undefined;
+      self.firstLogin = undefined;
+      self.provider = undefined;
+      self.exp = 0;
+    },
+
+    setPayloadAsync: flow(function* (token: string) {
+      try {
+        const payload = jwtDecode(token);
+        self = { ...self, ...payload };
+        self.sub = payload.sub;
+        self.authority = payload.authority;
+        self.firstLogin = payload.firstLogin;
+        self.provider = payload.provider;
+        self.exp = payload.exp;
+      } catch {
+        self.init();
+      }
+    }),
+  }));
+
+export interface AuthInstance extends Instance<typeof AuthStore> {}
 
 export const AuthStore = types
   .model('AuthStore', {
-    accessToken: types.maybe(types.string),
+    accessToken: types.maybe(AccessToken),
     payload: types.optional(Payload, {}),
   })
   .views((self) => ({
     get isActivateUser() {
-      return !!self.accessToken && self.payload?.authority === 'ACTIVATED_USER';
+      return (
+        !!self.accessToken &&
+        self.payload?.authority === Authority.ActivatedUser
+      );
     },
   }))
   .actions((self) => {
-    const setToken = flow(function* () {
+    const setTokenAsync = flow(function* () {
       const storageToken = yield getToken();
       if (storageToken) {
         self.accessToken = storageToken;
-        const tokenWithoutFormat = self.accessToken.split(' ')[1];
+        const tokenWithoutFormat = self.accessToken.jwt.split(' ')[1];
         self.payload = jwtDecode(tokenWithoutFormat);
       }
     });
 
-    const checkRegistration = flow(function* (
-      email: string
-    ): CheckRegistrationActionType {
+    const trySignupOrSigninAsync = flow(function* (email: string) {
       if (!EMAIL_RGX.test(email)) {
-        return Promise.reject(new Error('Invalid email'));
+        throw new Error('Invalid email');
       }
       try {
         const { registered, name, provider } = yield* toGenerator(
@@ -68,26 +102,25 @@ export const AuthStore = types
         if (registered) return { redirectTo: '/auth/login', name };
         else return { redirectTo: '/auth/signup' };
       } catch (err) {
-        const message = U.getErrorMessage(err);
-        U.reportError({ message });
+        throw new Error(err.message);
       }
     });
 
-    const signup = flow(function* (payload: RegisterPayloadType) {
+    const signupAsync = flow(function* (payload: RegisterPayloadType) {
       const { accessToken } = yield userClient.register(payload);
       yield persistToken(accessToken);
       self.accessToken = accessToken;
     });
 
-    const login = flow(function* (payload: LoginPayloadType): LoginActionType {
+    const loginAsync = flow(function* (payload: LoginPayloadType) {
       try {
         const { accessToken } = yield userClient.login(payload);
         yield persistToken(accessToken);
-        self.accessToken = accessToken;
+        self.accessToken.jwt = accessToken;
         self.payload = jwtDecode(accessToken.split(' ')[1]);
+        getParent<RootStoreType>(self).setCurrentUser();
 
         if (self.isActivateUser) {
-          getParent<RootStoreType>(self).setCurrentUser();
           return { redirectTo: '/', screen: '/home' };
         } else {
           return { redirectTo: '/auth/send-verification' };
@@ -97,32 +130,18 @@ export const AuthStore = types
       }
     });
 
-    const logout = () => {
-      removeToken();
+    const logoutAsync = flow(function* () {
+      yield removeToken();
       self.accessToken = undefined;
-      self.payload = undefined;
+      self.payload.init();
       getParent<RootStoreType>(self).setCurrentUser();
+    });
+
+    return {
+      setTokenAsync,
+      trySignupOrSigninAsync,
+      loginAsync,
+      logoutAsync,
+      signupAsync,
     };
-
-    return { setToken, checkRegistration, login, logout, signup };
   });
-
-type CheckRegistrationActionType = Generator<
-  Promise<CheckRegistrationType>,
-  | Promise<never>
-  | {
-      redirectTo: '/auth/login' | '/auth/signup';
-      name?: string;
-    },
-  CheckRegistrationType
->;
-
-type LoginActionType = Generator<
-  Promise<LoginReturnType> | Promise<void>,
-  | Promise<never>
-  | {
-      redirectTo: '/' | '/auth/send-verification';
-      screen?: keyof MainTabParamList | keyof AuthStackParamList;
-    },
-  LoginReturnType
->;

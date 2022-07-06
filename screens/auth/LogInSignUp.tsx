@@ -19,7 +19,7 @@ const LogInSignUp = (props: LoginSignUpProp) => {
 
   const onEmailInputChange = (text: string) => (emailInputRef.current = text);
   const handlePressNextBtn = useCallback(async () => {
-    const { redirectTo, name } = await store.checkRegistration(
+    const { redirectTo, name } = await store.trySignupOrSigninAsync(
       emailInputRef.current
     );
     navigation.navigate(redirectTo, {
