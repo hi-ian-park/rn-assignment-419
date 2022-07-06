@@ -28,11 +28,7 @@ export const userClient = {
     if (response.ok) {
       return data;
     } else {
-      if (data.errorCode === ErrorCode.Auth.IncorrectCredentials) {
-        throw new Error('Incorrect email or password');
-      } else {
-        throw new Error(data);
-      }
+      throw new Error(data.message);
     }
   },
 

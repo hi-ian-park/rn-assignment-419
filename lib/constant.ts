@@ -34,3 +34,9 @@ export namespace ErrorCode {
     UserNameForSignupNotFound = 'error_000009',
   }
 }
+
+export enum Authority {
+  ActivatedUser = 'ACTIVATED_USER',
+  TemporaryUser = 'TEMPORARY_USER',
+  WithdrawnUser = 'WITHDRAWN_USER',
+}

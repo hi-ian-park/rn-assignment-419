@@ -25,7 +25,7 @@ const AccessToken = types
     setTokenAsync: flow(function* () {
       try {
         const token = yield getToken();
-        self.jwt = token;
+        self.jwt = token || '';
       } catch {
         self.jwt = '';
       }
@@ -51,18 +51,14 @@ const Payload = types
       self.exp = 0;
     },
 
-    setPayloadAsync: flow(function* (token: string) {
-      try {
-        const payload = jwtDecode(token);
-        self = { ...self, ...payload };
-        self.sub = payload.sub;
-        self.authority = payload.authority;
-        self.firstLogin = payload.firstLogin;
-        self.provider = payload.provider;
-        self.exp = payload.exp;
-      } catch {
-        self.init();
-      }
+    setPayload: flow(function* (
+      payload: LoginPayloadType | RegisterPayloadType
+    ) {
+      self.sub = payload.sub;
+      self.authority = payload.authority;
+      self.firstLogin = payload.firstLogin;
+      self.provider = payload.provider;
+      self.exp = payload.exp;
     }),
   }));
 
@@ -70,7 +66,7 @@ export interface AuthInstance extends Instance<typeof AuthStore> {}
 
 export const AuthStore = types
   .model('AuthStore', {
-    accessToken: types.maybe(AccessToken),
+    accessToken: types.optional(AccessToken, {}),
     payload: types.optional(Payload, {}),
   })
   .views((self) => ({
@@ -82,10 +78,14 @@ export const AuthStore = types
     },
   }))
   .actions((self) => {
-    const setTokenAsync = flow(function* () {
-      const storageToken = yield getToken();
-      if (storageToken) {
-        self.accessToken = storageToken;
+    const setAuthStoreAsync = flow(function* () {
+      try {
+        yield self.accessToken?.setTokenAsync();
+      } catch (err) {
+        console.log(err);
+      }
+      console.log(self.accessToken.jwt);
+      if (self.accessToken.jwt) {
         const tokenWithoutFormat = self.accessToken.jwt.split(' ')[1];
         self.payload = jwtDecode(tokenWithoutFormat);
       }
@@ -138,7 +138,7 @@ export const AuthStore = types
     });
 
     return {
-      setTokenAsync,
+      setAuthStoreAsync,
       trySignupOrSigninAsync,
       loginAsync,
       logoutAsync,

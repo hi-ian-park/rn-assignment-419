@@ -9,7 +9,7 @@ export const StoreContext = createContext<RootStoreType | null>(store);
 const StoreProvider = ({ children }) => {
   useEffect(() => {
     (async () => {
-      await store.auth.setTokenAsync();
+      await store.auth.setAuthStoreAsync();
       if (store.auth?.accessToken) {
         await store.setCurrentUser();
       } else {
