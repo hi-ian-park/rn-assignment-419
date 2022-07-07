@@ -1,5 +1,12 @@
 import jwtDecode from 'jwt-decode';
-import { flow, toGenerator, types, getParent, Instance } from 'mobx-state-tree';
+import {
+  flow,
+  toGenerator,
+  types,
+  getParent,
+  Instance,
+  getRoot,
+} from 'mobx-state-tree';
 
 import { Authority } from 'lib/constant';
 import { getToken, persistToken, removeToken } from 'service/auth.storage';
@@ -12,25 +19,6 @@ import { RootStoreType } from 'store/RootStore';
 
 // eslint-disable-next-line no-useless-escape
 const EMAIL_RGX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
-const AccessToken = types
-  .model('AccessToken', {
-    jwt: types.optional(types.string, ''),
-  })
-  .actions((self) => ({
-    init() {
-      self.jwt = '';
-    },
-
-    setTokenAsync: flow(function* () {
-      try {
-        const token = yield getToken();
-        self.jwt = token || '';
-      } catch {
-        self.jwt = '';
-      }
-    }),
-  }));
 
 const Payload = types
   .model('Payload', {
@@ -50,26 +38,23 @@ const Payload = types
       self.provider = undefined;
       self.exp = 0;
     },
-
-    setPayload: flow(function* (
-      payload: LoginPayloadType | RegisterPayloadType
-    ) {
-      self.sub = payload.sub;
-      self.authority = payload.authority;
-      self.firstLogin = payload.firstLogin;
-      self.provider = payload.provider;
-      self.exp = payload.exp;
-    }),
   }));
 
 export interface AuthInstance extends Instance<typeof AuthStore> {}
 
 export const AuthStore = types
   .model('AuthStore', {
-    accessToken: types.optional(AccessToken, {}),
+    accessToken: types.maybeNull(types.string),
     payload: types.optional(Payload, {}),
   })
   .views((self) => ({
+    get $root() {
+      return getRoot<RootStoreType>(self);
+    },
+    get $parent() {
+      // 현재는 RootStore가 parent 이므로, 타입을 RootStoreType으로 지정
+      return getParent<RootStoreType>(self);
+    },
     get isActivateUser() {
       return (
         !!self.accessToken &&
@@ -78,15 +63,11 @@ export const AuthStore = types
     },
   }))
   .actions((self) => {
-    const setAuthStoreAsync = flow(function* () {
-      try {
-        yield self.accessToken?.setTokenAsync();
-      } catch (err) {
-        console.log(err);
-      }
-      console.log(self.accessToken.jwt);
-      if (self.accessToken.jwt) {
-        const tokenWithoutFormat = self.accessToken.jwt.split(' ')[1];
+    const setTokenAsync = flow(function* () {
+      const storageToken = yield getToken();
+      self.accessToken = storageToken;
+      if (storageToken) {
+        const tokenWithoutFormat = self.accessToken.split(' ')[1];
         self.payload = jwtDecode(tokenWithoutFormat);
       }
     });
@@ -116,9 +97,9 @@ export const AuthStore = types
       try {
         const { accessToken } = yield userClient.login(payload);
         yield persistToken(accessToken);
-        self.accessToken.jwt = accessToken;
+        self.accessToken = accessToken;
         self.payload = jwtDecode(accessToken.split(' ')[1]);
-        getParent<RootStoreType>(self).setCurrentUser();
+        self.$parent.setCurrentUser();
 
         if (self.isActivateUser) {
           return { redirectTo: '/', screen: '/home' };
@@ -134,11 +115,11 @@ export const AuthStore = types
       yield removeToken();
       self.accessToken = undefined;
       self.payload.init();
-      getParent<RootStoreType>(self).setCurrentUser();
+      self.$parent.setCurrentUser();
     });
 
     return {
-      setAuthStoreAsync,
+      setTokenAsync,
       trySignupOrSigninAsync,
       loginAsync,
       logoutAsync,

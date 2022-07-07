@@ -14,13 +14,13 @@ export const RootStore = types
     const setCurrentUser = flow(function* () {
       try {
         if (self.auth.isActivateUser) {
-          const user = yield userClient.getCurrent(self.auth.accessToken.jwt);
+          const user = yield userClient.getCurrent(self.auth.accessToken);
           self.user = user;
         } else {
-          self.user.init();
+          self.user?.init();
         }
       } catch {
-        self.user.init();
+        self.user?.init();
       }
     });
 

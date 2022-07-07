@@ -5,7 +5,7 @@ import { RootStoreType } from 'store/RootStore';
 
 export const User = types //
   .model('User', {
-    id: types.identifierNumber,
+    id: types.maybe(types.number),
     firstName: types.optional(types.string, ''),
     lastName: types.optional(types.string, ''),
     name: types.optional(types.string, ''),
@@ -43,9 +43,7 @@ export const User = types //
 
     setCurrentUserAsync: flow(function* () {
       try {
-        const user = yield userClient.getCurrent(
-          self.$parent.auth.accessToken.jwt
-        );
+        const user = yield userClient.getCurrent(self.$parent.auth.accessToken);
         self.$parent.user = user;
       } catch {
         self.$parent.user.init();
