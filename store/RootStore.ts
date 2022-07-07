@@ -1,0 +1,30 @@
+import { Instance, types, flow } from 'mobx-state-tree';
+
+import { userClient } from 'service/user.client';
+
+import { AuthStore } from './auth/AuthStore';
+import { User } from './user/UserStore';
+
+export const RootStore = types
+  .model('RootStore', {
+    auth: types.optional(AuthStore, {}),
+    user: types.maybe(User),
+  })
+  .actions((self) => {
+    const setCurrentUser = flow(function* () {
+      try {
+        if (self.auth.isActivateUser) {
+          const user = yield userClient.getCurrent(self.auth.accessToken);
+          self.user = user;
+        } else {
+          self.user?.init();
+        }
+      } catch {
+        self.user?.init();
+      }
+    });
+
+    return { setCurrentUser };
+  });
+
+export type RootStoreType = Instance<typeof RootStore>;

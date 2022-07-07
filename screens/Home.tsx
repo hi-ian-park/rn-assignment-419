@@ -1,13 +1,16 @@
-import React from 'react';
 import styled from 'styled-components/native';
 
-function Home() {
+import Text from 'components/Text/Text';
+
+const Home = () => {
   return (
     <Styled.Container>
-      <Styled.Text>HOME</Styled.Text>
+      <Text size="xl" fontWeight="bold">
+        HOME
+      </Text>
     </Styled.Container>
   );
-}
+};
 
 const Styled = {
   Container: styled.View`

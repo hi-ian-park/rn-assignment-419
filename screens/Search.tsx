@@ -1,13 +1,16 @@
-import React from 'react';
 import styled from 'styled-components/native';
 
-function Search() {
+import Text from 'components/Text/Text';
+
+const Search = () => {
   return (
     <Styled.Container>
-      <Styled.Text>Search</Styled.Text>
+      <Text size="xl" fontWeight="bold">
+        SEARCH
+      </Text>
     </Styled.Container>
   );
-}
+};
 
 const Styled = {
   Container: styled.View`

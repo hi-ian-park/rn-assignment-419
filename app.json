@@ -14,9 +14,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.hiianpark.RNMSG419"
@@ -35,6 +33,7 @@
       "eas": {
         "projectId": "b4e7e0b5-3642-4dd4-a478-eea5112db5c6"
       }
-    }
+    },
+    "plugins": ["expo-community-flipper"]
   }
 }

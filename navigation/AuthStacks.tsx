@@ -1,25 +1,47 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React from 'react';
 
-import Login from '../screens/auth/Login';
-import Onboard from '../screens/auth/Onboard';
-import SignUp from '../screens/auth/SignUp';
+import NavigationBar from 'components/Bars/NavigationBar';
+import EnterFullName from 'screens/auth/EnterFullName';
+import LogInSignUp from 'screens/auth/LogInSignUp';
+import Login from 'screens/auth/Login';
+import Onboard from 'screens/auth/Onboard';
+import SendVerification from 'screens/auth/SendVerification';
+import SignUp from 'screens/auth/SignUp';
+import { AuthStackParamList } from 'types/NavigationTypes';
 
-const NativeStack = createNativeStackNavigator();
-// TODO: 여기부터 작업 시작
-function AuthStacks() {
+const NativeStack = createNativeStackNavigator<AuthStackParamList>();
+
+const AuthStacks = () => {
   return (
     <NativeStack.Navigator
       initialRouteName="/auth/onboard"
       screenOptions={{
-        headerShown: false,
+        headerLeft: NavigationBar,
+        title: '',
+        headerStyle: {
+          backgroundColor: '#f2f2f2',
+        },
+        headerShadowVisible: false,
       }}
     >
-      <NativeStack.Screen name="/auth/onboard" component={Onboard} />
-      <NativeStack.Screen name="/auth/login" component={Login} />
+      <NativeStack.Screen
+        name="/auth/onboard"
+        component={Onboard}
+        options={{ headerShown: false }}
+      />
+      <NativeStack.Screen name="/auth/login-signup" component={LogInSignUp} />
       <NativeStack.Screen name="/auth/signup" component={SignUp} />
+      <NativeStack.Screen name="/auth/login" component={Login} />
+      <NativeStack.Screen
+        name="/auth/enter-full-name"
+        component={EnterFullName}
+      />
+      <NativeStack.Screen
+        name="/auth/send-verification"
+        component={SendVerification}
+      />
     </NativeStack.Navigator>
   );
-}
+};
 
 export default AuthStacks;

@@ -1,42 +1,127 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
-import { Text } from 'react-native';
+import { useCallback, useState } from 'react';
+import { ImageBackground } from 'react-native';
 import styled from 'styled-components/native';
 
-function Onboard() {
-  const navigation = useNavigation();
+import BottomSheet from 'components/BottomSheet';
+import Button from 'components/Button/Button';
+import SocialLoginButton from 'components/Button/SocialLoginButton';
+import { flexBox } from 'styles/utils';
+import { OnboardScreenNavigationProp } from 'types/NavigationTypes';
+
+const Onboard = () => {
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const navigation = useNavigation<OnboardScreenNavigationProp>();
+
+  const handlePressStartBtn = useCallback(() => {
+    setIsBottomSheetOpen(true);
+  }, []);
+
+  const onCloseBottomSheet = useCallback(() => {
+    setIsBottomSheetOpen(false);
+  }, []);
+
+  const handlePressContinueAsGuestBtn = useCallback(() => {
+    setIsBottomSheetOpen(false);
+    navigation.reset({ routes: [{ name: '/' }] });
+  }, [navigation]);
+
+  const handlePressContinueWithEmailBtn = useCallback(() => {
+    onCloseBottomSheet();
+    navigation.navigate('/auth/login-signup');
+  }, [navigation, onCloseBottomSheet]);
 
   return (
-    <Styled.Container>
-      <Styled.Text>Onboard</Styled.Text>
-      <Styled.Button
-        onPress={() => navigation.navigate('/auth', { screen: '/auth/login' })}
-      >
-        <Text>Get Start</Text>
-      </Styled.Button>
-
-      <Styled.Button
-        onPress={() => navigation.reset({ routes: [{ name: '/' }] })}
-      >
-        <Text>Continue as guest</Text>
-      </Styled.Button>
-    </Styled.Container>
+    <ImageBackground
+      source={require('assets/images/onboarding-ko.jpg')}
+      style={{
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+      }}
+    >
+      <Styled.BottomSheet>
+        <Button
+          style={{ marginBottom: 10 }}
+          onPress={handlePressStartBtn}
+          variant="primary"
+        >
+          Get Started
+        </Button>
+        <Button
+          onPress={handlePressContinueAsGuestBtn}
+          variant="ghost"
+          fontSize="sm"
+        >
+          Continue as guest
+        </Button>
+      </Styled.BottomSheet>
+      <BottomSheet visible={isBottomSheetOpen} onClose={onCloseBottomSheet}>
+        <Styled.SocialLoginButton
+          style={{ marginBottom: 10 }}
+          iconName="apple"
+          variant="primary"
+          backgroundColor="#0F0F0F"
+          iconColor="#fff"
+          onPress={onCloseBottomSheet}
+        >
+          Continue with Apple
+        </Styled.SocialLoginButton>
+        <Styled.SocialLoginButton
+          style={{ marginBottom: 10 }}
+          iconName="google"
+          backgroundColor="transparent"
+          iconColor="#333"
+          variant="outlined"
+          onPress={onCloseBottomSheet}
+        >
+          Continue with Google
+        </Styled.SocialLoginButton>
+        <Styled.SocialLoginButton
+          style={{ marginBottom: 10 }}
+          iconName="facebook"
+          variant="primary"
+          backgroundColor="#007DFF"
+          iconColor="#fff"
+          onPress={onCloseBottomSheet}
+        >
+          Continue with Facebook
+        </Styled.SocialLoginButton>
+        <Button
+          onPress={handlePressContinueWithEmailBtn}
+          variant="ghost"
+          fontSize="sm"
+        >
+          Continue with Email
+        </Button>
+      </BottomSheet>
+    </ImageBackground>
   );
-}
+};
 
 const Styled = {
-  Container: styled.View`
-    flex: 1;
-    align-items: center;
-    justify-content: center;
+  BottomSheet: styled.View`
+    ${flexBox('column', 'center', 'center')};
+    width: 100%;
+    padding: 28px 16px;
+    background-color: #fff;
   `,
 
-  Text: styled.Text`
-    font-size: 36px;
-  `,
+  SocialLoginButton: styled(SocialLoginButton)``,
 
-  Button: styled.TouchableOpacity`
-    margin-bottom: 10px;
+  Overlay: styled.View`
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: ${({ theme }) => theme.levels.overlay};
+    width: 100%;
+    height: 100%;
+    max-width: 100vw;
+    max-height: 100vh;
+    overflow: hidden;
+    background-color: ${({ theme }) => theme.colors.primary};
+    opacity: 0.7;
   `,
 };
 
